@@ -1,0 +1,342 @@
+\documentclass[9pt]{extarticle}
+\usepackage[a4paper,landscape,margin=6mm]{geometry}
+\usepackage{multicol}
+\usepackage{amsmath,amssymb}
+\usepackage{mathtools}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{array}
+
+\usepackage{microtype}
+
+% ---------- spacing: squeeze everything ----------
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\columnsep}{4mm}
+\setlength{\columnseprule}{0.2pt}
+\renewcommand{\baselinestretch}{0.95}
+\setlist[itemize]{leftmargin=1.1em,topsep=0pt,parsep=0pt,itemsep=0pt,partopsep=0pt}
+\setlist[enumerate]{leftmargin=1.4em,topsep=0pt,parsep=0pt,itemsep=0pt,partopsep=0pt}
+\everymath{\displaystyle}
+
+% tighten amsmath display spacing
+\setlength{\abovedisplayskip}{1.8pt}
+\setlength{\belowdisplayskip}{1.8pt}
+\setlength{\abovedisplayshortskip}{1pt}
+\setlength{\belowdisplayshortskip}{1pt}
+
+% ---------- section heading (lightweight, breaks cleanly in columns) ----------
+\definecolor{hdr}{RGB}{20,40,60}
+\definecolor{hdrbg}{RGB}{225,232,240}
+\newcommand{\sect}[1]{%
+  \vspace{2pt}\par\noindent
+  \colorbox{hdrbg}{\makebox[\dimexpr\linewidth-2\fboxsep][l]{%
+    \textbf{\footnotesize\textcolor{hdr}{#1}}}}%
+  \par\vspace{1.5pt}}
+
+\newcommand{\sub}[1]{\textit{\textbf{#1:}}\ }
+\newcommand{\R}{\mathbb{R}}
+
+\pagestyle{empty}
+
+\begin{document}
+\small
+\begin{multicols}{3}
+
+% ===================================================
+\sect{1. Core Concepts \& Modelling}
+\sub{Dynamical system} state $x(t)$ evolves from current state + inputs/disturbances. \textbf{Feedback}: measure output, compare to reference $r$, adjust input $u$.\\[1pt]
+\sub{LTI state-space}
+\[ \dot{\mathbf{x}}=A\mathbf{x}+Bu+D,\quad y(t)=C\mathbf{x} \]
+$A$=dynamics (main), $B$=input, $C$=output, $D$=disturbance. $A\!\in\!\R^{n\times n}$, $B\!\in\!\R^{n\times 1}$, $C\!\in\!\R^{1\times n}$. Feedthrough form: $y{=}C\mathbf{x}{+}Du$.\\[1pt]
+\sub{ODE $\to$ SS} for $\ddot{x}+a\dot x+bx=u$, $\mathbf{x}=(x,\dot x)^T$:
+\[ A=\begin{pmatrix}0&1\\-b&-a\end{pmatrix},\ B=\begin{pmatrix}0\\1\end{pmatrix},\ C=\begin{pmatrix}1&0\end{pmatrix} \]
+\sub{TF $\to$ SS} for $G(s)=\dfrac{b_0}{s^2+a_1 s+a_0}$:
+\[ A=\begin{pmatrix}0&1\\-a_0&-a_1\end{pmatrix},\ B=\begin{pmatrix}0\\1\end{pmatrix},\ C=\begin{pmatrix}b_0&0\end{pmatrix} \]
+\sub{Mass-spring-damper} $m\ddot y+c\dot y+ky=u$, $G(s)=\dfrac{1}{ms^2+cs+k}$.
+
+% ---------------------------------------------------
+\sect{2. Linearisation (Lec 2)}
+For $\dot x=f(x,u)$:\\
+\textbf{(1)} Equilibrium $f(x_e,u_e)=0$.\\
+\textbf{(2)} Taylor (1st order):
+\[ \dot x\approx f(x_e,u_e)+\tfrac{\partial f}{\partial x}\Big|_e(x-x_e)+\tfrac{\partial f}{\partial u}\Big|_e(u-u_e) \]
+\textbf{(3)} Deviation vars $\delta x=x-x_e,\ \delta u=u-u_e$:
+\[ \dot{\delta x}\approx \tfrac{\partial f}{\partial x}\big|_e\,\delta x+\tfrac{\partial f}{\partial u}\big|_e\,\delta u \]
+Multivariable: $A=\tfrac{\partial f}{\partial \mathbf x}\big|_e$ (Jacobian), $B=\tfrac{\partial f}{\partial u}\big|_e$.
+
+% ---------------------------------------------------
+\sect{3. First-Order Systems (Lec 3)}
+$\dot x+ax=u$, free resp.: $x(t)=e^{-at}x(0)$.\\
+\textbf{Stability}: pole at $s{=}-a$. $a{>}0\Rightarrow$ decays, \textbf{stable}; $a{<}0\Rightarrow$ grows, \textbf{unstable}.\\
+Step ($u{=}$const), $x(0){=}x_0$:
+\[ x(t)=\Big(x_0-\tfrac{u}{a}\Big)e^{-at}+\tfrac{u}{a} \]
+Steady state: $x(\infty)=u/a$. Time constant $\tau=1/a$.\\
+\sub{Time specs} rise $t_r\approx\tfrac{2.2}{a}{=}2.2\tau$ ($10$--$90\%$); settle $t_s\approx\tfrac{3.91}{a}\approx\tfrac{4}{a}{=}4\tau$ ($2\%$).\\
+\sub{Transfer function} $G(s)=\dfrac{\text{output}}{\text{input}}=\dfrac{Y(s)}{U(s)}$, $y=G(s)u,\ u=Ue^{st}$.\\
+$G(s)=\dfrac{X(s)}{U(s)}$. For $\ddot x+3\dot x+2x=u$: $G=\tfrac{1}{s^2+3s+2}$.\\
+\sub{DC gain $\to$ final value} for \emph{any stable} $G$, step of size $U$:
+\[ x(\infty)=G(0)\cdot U \quad(\text{set all derivs}=0). \]
+$G(0)$ sign = direction ($G(0){<}0\Rightarrow$ output dips below $0$); magnitude = final value. Generalises $x_\infty{=}u/a$.
+
+% ---------------------------------------------------
+\sect{4. Proportional / Steady-State Error}
+Plant $\dot x+ax=u$, $u=K_P(r-x)$:
+\[ \dot x+(a{+}K_P)x=K_Pr \]
+$x(\infty)=\tfrac{K_Pr}{K_P+a}$, error $e(\infty)=r\,\tfrac{a}{K_P+a}$.\\
+With disturbance $d$, noise $n$:
+\[ x_{ss}=\frac{K_P(r-n)+d}{a+K_P} \]
+Large $K_P\Rightarrow$ small error (\textbf{feedback stabilisation}: pick $K_P>-a$). \textbf{Integral} action $\Rightarrow$ zero steady-state error.\\
+\sub{SS error (unity fb, unit step)} $e(\infty)=\dfrac{1}{1+G(0)}$ ($G(0)$=DC loop gain; position const $K_p{=}G(0)$).
+
+% ===================================================
+\sect{5. Homogeneous Solns \& Poles (Lec 4)}
+Char. eq. of $\ddot x+a\dot x+bx=0$: $\lambda^2+a\lambda+b=0$.\\
+\sub{Real distinct} ($a^2{-}4b{>}0$): $x_h=C_1e^{\lambda_1 t}+C_2e^{\lambda_2 t}$.\\
+\sub{Real repeated} ($a^2{-}4b{=}0$): $x_h=(C_1+C_2t)e^{\lambda^* t}$.\\
+\sub{Complex} $\lambda=-\sigma\pm j\omega_d$:
+\[ x_h=e^{-\sigma t}(C_3\cos\omega_d t+C_4\sin\omega_d t) \]
+\textbf{Stability}: all poles (roots of denom.) have negative real part $\Leftrightarrow x(t)\!\to\!0$ for any $x(0)$, zero input.\\
+\textbf{Necessary cond.}: char.\ poly has \emph{all coefficients present \& positive} (same sign) — any missing/sign change $\Rightarrow$ unstable. Real, distinct, negative poles $\Rightarrow$ stable \& non-oscillatory.\\
+$G(s)=\dfrac{b_1s+b_0}{s^2+a_1s+a_0}$; \textbf{poles}=denom roots, \textbf{zeros}=numer roots.
+
+% ---------------------------------------------------
+\sect{6. Second-Order Systems (Lec 5)}
+Standard: $G(s)=\dfrac{\omega_n^2}{s^2+2\zeta\omega_n s+\omega_n^2}$.\\
+Poles $s=-\zeta\omega_n\pm j\omega_n\sqrt{1-\zeta^2}=-\sigma\pm j\omega_d$.
+\[ \sigma=\zeta\omega_n,\quad \omega_d=\omega_n\sqrt{1-\zeta^2} \]
+\[ \omega_n=\sqrt{\sigma^2+\omega_d^2},\quad \zeta=\sigma/\omega_n \]
+$\zeta$ = sine of angle from imag. axis. Underdamped: $0<\zeta<1$.\\
+\sub{Envelope} $x(t)=e^{-\sigma t}\sin(\omega_d t)$.
+
+\textbf{Response specifications:}
+\[ M_p=e^{-\pi\zeta/\sqrt{1-\zeta^2}}\quad(\text{overshoot}) \]
+\[ t_p=\frac{\pi}{\omega_d}\quad(\text{peak time}) \]
+\[ t_s\approx\frac{4}{\sigma}=\frac{4}{\zeta\omega_n}\quad(2\%\ \text{settling}) \]
+\[ t_r\approx\frac{1.8}{\omega_n}\quad(\text{rise }10\text{--}90\%) \]
+$5\%$ overshoot $\Rightarrow \zeta\approx\tfrac{\sqrt2}{2}\approx0.707$.
+
+% ---------------------------------------------------
+\sect{7. PID Control (Lec 5)}
+\[ C(s)=K_p+\frac{K_i}{s}+K_d s=\frac{K_ds^2+K_ps+K_i}{s} \]
+\begin{itemize}
+\item \textbf{P}: fast, may leave SS error / oscillate.
+\item \textbf{PI}: removes SS error, slower transient.
+\item \textbf{PD}: adds damping, faster, noise-sensitive, adds a zero.
+\item \textbf{PID}: removes SS error + improves transient.
+\end{itemize}
+$K_p\!\uparrow\Rightarrow\omega_n\!\uparrow$ (faster), $\zeta\!\downarrow$ (more overshoot).\\
+\sub{Rate feedback} $u=K_P(r-x)-K_D\dot x$ (avoids derivative kick):
+\[ G(s)=\frac{K_P+K_Ds}{s^2+(1+K_D)s+K_P} \]
+zero at $s=-K_P/K_D$.\\
+\textbf{PD design ex.} $\ddot x+3\dot x+2x=u$, $u=K_p(r-x)-K_d\dot x$:
+\[ G=\frac{K_p}{s^2+(3+K_d)s+(K_p+2)} \]
+match to $s^2+2\zeta\omega_n s+\omega_n^2$.
+
+% ---------------------------------------------------
+\sect{8. Effect of Zeros (Lec 5)}
+$G(s)=\frac{b_1s+b_0}{s+a}$, zero at $s=-b_0/b_1$.\\
+$b_1{>}0,b_0{>}0$: LHP zero, \textbf{min-phase}, kick same dir.\\
+$b_1{<}0,b_0{>}0$: RHP zero, \textbf{non-min-phase}, "wrong-way" initial response, hard to control.
+
+% ===================================================
+\sect{9. State-Space Response (Lec 6)}
+\sub{Matrix exponential} $e^{At}=\sum_{k=0}^{\infty}\dfrac{(At)^k}{k!}=I+At+\tfrac{(At)^2}{2!}+\cdots$\\
+Free resp.: $\mathbf x(t)=e^{At}\mathbf x(0)$.\\
+Forced: $\mathbf x(t)=e^{At}\mathbf x_0+\int_0^t e^{A(t-\tau)}Bu\,d\tau$.\\
+\sub{TF from SS} $G(s)=C(sI-A)^{-1}B+D$.\\
+Output to $u=Ue^{st}$: $y=Ce^{At}\mathbf x_0+G(s)Ue^{st}$.\\
+\textbf{Stable} $\Leftrightarrow$ all eigenvalues of $A$ have $\mathrm{Re}<0$.\\
+$e^{At}=Te^{Jt}T^{-1}$ (Jordan); repeated eig give $t^k$ terms.
+
+% ---------------------------------------------------
+\sect{10. Reachability / Control (Lec 7)}
+\sub{Reachability matrix} (2nd order: $2\times2$)
+\[ W=\begin{bmatrix}B&AB\end{bmatrix} \]
+Reachable $\Leftrightarrow \det W\neq0$.\\
+Equivalent: can place \emph{any} closed-loop poles via $K$.\\
+\sub{State feedback} $u=-K\mathbf x$, closed loop $\dot{\mathbf x}=(A-BK)\mathbf x$.\\
+Design: $\det(sI-(A-BK))\overset{!}{=}$ desired char. poly, \textbf{match coefficients}.\\
+\sub{Transformation} $T=W\tilde W^{-1}$ ($\tilde W$ from reachable canonical form), $K=\tilde K T$.\\
+\sub{Reachable canonical form} for $\ddot y{+}a_1\dot y{+}a_2y{=}u$ (top-row companion):
+\[ \tilde A=\begin{psmallmatrix}-a_1&-a_2\\1&0\end{psmallmatrix},\ \tilde B=\begin{psmallmatrix}1\\0\end{psmallmatrix} \]
+char.\ poly $s^2{+}a_1s{+}a_2$ read off top row.\\
+\sub{Dominant poles} choose 2nd-order pair for transient; place rest $5$--$10\times$ further left, low overshoot.
+
+% ---------------------------------------------------
+\sect{11. Observability / Observers (Lec 8)}
+\sub{Observability matrix} (2nd order: $2\times2$)
+\[ W_o=\begin{bmatrix}C\\CA\end{bmatrix} \]
+Observable $\Leftrightarrow \det W_o\neq0$: recover $\mathbf x(0)$ from $u,y$ on $[0,T]$.\\
+\sub{Luenberger observer}
+\[ \dot{\hat{\mathbf x}}=A\hat{\mathbf x}+Bu+L(y-C\hat{\mathbf x}) \]
+Error $\tilde{\mathbf x}=\mathbf x-\hat{\mathbf x}$: $\dot{\tilde{\mathbf x}}=(A-LC)\tilde{\mathbf x}$.\\
+\textbf{Condition}: $A-LC$ stable ($\Rightarrow\tilde{\mathbf x}\!\to\!0$). Roots (eig) of $A{-}LC$: \textbf{negative} $\Rightarrow$ error decays, $\hat{\mathbf x}\!\to\!\mathbf x$ (convergent); \textbf{positive} $\Rightarrow$ unstable, error grows, never converges.\\
+Design: $\det(sI-(A-LC))\overset{!}{=}$ desired poly, match coeffs.\\
+\sub{Output feedback} (separation): observer + $u=-K\hat{\mathbf x}+Nr$. CL char poly: $\det(sI{-}(A{-}BK))\det(sI{-}(A{-}LC))$.\\
+\sub{Separation principle} applies to systems that are \emph{both reachable \& observable}: design $K$ and $L$ \textbf{independently}; the CL poles are just the union of the controller poles (eig $A{-}BK$) and observer poles (eig $A{-}LC$).\\
+\sub{Feedforward} (zero SS err): $N=-\big(C(A-BK)^{-1}B\big)^{-1}$.\\
+\sub{Integral action} augment state $\dot q=C\mathbf x-\bar y$ to kill SS error without exact model.
+
+% ===================================================
+\sect{12. Frequency Response (Lec 9)}
+Input $A\sin\omega t\Rightarrow y=A|G(j\omega)|\sin(\omega t+\phi)$.\\
+$G(j\omega)=|G(j\omega)|e^{j\phi},\ \phi=\angle G=\arctan\tfrac{\mathrm{Im}}{\mathrm{Re}}$.\\
+$\angle G=\sum\angle(\text{num})-\sum\angle(\text{den})$: \textbf{numerator} (zeros) add $+$ve phase, \textbf{denominator} (poles) add $-$ve phase.\\
+\sub{Complex algebra} $z_1z_2$: multiply mags, add phases; $z_1/z_2$: divide mags, subtract phases.\\
+Ex.\ $G=\frac{1}{j\omega(j\omega+1)(j\omega+3)}$:
+\[ |G|=\frac{1}{\sqrt{\omega^2(\omega^2{+}1)(\omega^2{+}9)}} \]
+\[ \angle G=-\big(\tfrac{\pi}{2}+\arctan\omega+\arctan\tfrac{\omega}{3}\big) \]
+\sub{Forced sinusoid (undetermined coeffs)} for $\ddot x+\omega_n^2x=\sin\omega t$, try $x{=}X\sin\omega t$, match:
+\[ X=\frac{1}{\omega_n^2-\omega^2} \]
+real $\Rightarrow$ phase $0^\circ/180^\circ$ (no lag); $X\!\to\!\infty$ as $\omega\!\to\!\omega_n$ (\textbf{resonance}, undamped).
+
+% ---------------------------------------------------
+\sect{13. Bode Plots (Lec 9--10)}
+Mag in dB: $20\log_{10}|G(j\omega)|$. $K=10^{dB/20}$, $dB=20\log_{10}K$. $\times10\!\Rightarrow\!20$dB; $1\!\to\!0$dB.\\
+\sub{Standard form} factor so each bracket starts with 1; constant out front $=$ DC gain $K$:
+\[ G(s)=\frac{K(\tfrac sa{+}1)}{s^n(\tfrac sb{+}1)} \]
+Start height (flat, low $\omega$) $=20\log_{10}K$ dB.\\
+\sub{Mag slopes} (added at break freq $\omega{=}|p|,|z|$):
+\begin{tabular}{@{}ll@{}}
+\hline
+DC gain $K$ & flat at $20\log K$\\
+integrator $1/s^n$ & $-20n$ dB/dec from $\omega{\to}0$\\
+diff.\ $s$ & $+20$ dB/dec\\
+pole $(\tfrac sb{+}1)^{-1}$ & $-20$ dB/dec after $\omega{=}b$\\
+zero $(\tfrac sa{+}1)$ & $+20$ dB/dec after $\omega{=}a$\\
+cplx poles @ $\omega_n$ & $-40$ dB/dec; peak $\tfrac{1}{2\zeta}$ at $\omega_n$\\
+cplx zeros @ $\omega_n$ & $+40$ dB/dec\\
+\hline
+\end{tabular}\\
+\sub{Phase} $\angle G=\sum\angle(\text{num}){-}\sum\angle(\text{den})$; each $(j\omega{+}a)$: $\arctan\tfrac\omega a$; transition $\pm1$ decade about corner.
+\begin{tabular}{@{}ll@{}}
+\hline
+DC gain & $0^\circ$\\
+integrator $1/s$ & $-90^\circ$ (all $\omega$)\\
+diff.\ $s$ & $+90^\circ$ (all $\omega$)\\
+pole @ $b$ & $-90^\circ$ total, centred $b$\\
+zero @ $a$ & $+90^\circ$ total, centred $a$\\
+cplx poles @ $\omega_n$ & $-180^\circ$ total\\
+\hline
+\end{tabular}\\
+\sub{dB factors} $-40{:}0.01$, $-20{:}0.1$, $-6{:}\tfrac12$, $0{:}1$, $6{:}2$, $20{:}10$, $40{:}100$.\\[2pt]
+\sub{Bode $\to$ TF} \textbf{(1)} DC gain $K{=}10^{X\text{dB}/20}$ from flat low-$\omega$ ($\omega=1$ if slanted start). \textbf{(2)} initial slope: flat$=$no int., $-20$/dec$=$one $1/s$, $-40{=}1/s^2$, $+20{=}s$. \textbf{(3)} corners where slope \emph{changes}: extra $-20\Rightarrow$ pole, $+20\Rightarrow$ zero, $\mp40\Rightarrow$ cplx pair @ $\omega_n$. \textbf{(4)} phase confirms: start $0/{-}90/{-}180^\circ{=}0/1/2$ integrators; drop @ corner$=$pole, rise$=$zero. \textbf{(5)} assemble:
+\[ G(s)=\frac{K\,s^{\text{pos}}(s{+}z_1)(s{+}z_2)\cdots}{s^{\text{int}}(s{+}p_1)(s{+}p_2)\cdots} \]
+\sub{Sanity} final slope $=-20(\#p{-}\#z)$ dB/dec; final phase $=-90^\circ(\#p{-}\#z)$; DC check: sub $s{=}0$.\\
+\sub{Ex.} flat $+20$dB, corner $\omega{=}2$ ($\to{-}20$), corner $\omega{=}20$ ($\to{-}40$), phase $0\!\to\!{-}90\!\to\!{-}180^\circ$: $K{=}10$, poles $2,20$:
+\[ G=\frac{10}{(\tfrac s2{+}1)(\tfrac{s}{20}{+}1)}=\frac{400}{(s{+}2)(s{+}20)} \]
+
+% ---------------------------------------------------
+\sect{14. Nyquist Criterion (Lec 10,12)}
+Plot $L(j\omega)$, $\omega:-\infty\to\infty$. Closed loop $G_{yr}=\tfrac{L}{1+L}$.\\
+\textbf{Theorem}: $P$=open-loop RHP poles of $L$; $N$=net \emph{clockwise} encirclements of $-1$. Then CL has $Z=N+P$ RHP poles.\\
+\textbf{Stable} $\Leftrightarrow Z=0\Leftrightarrow N=-P$ ($P$ anticlockwise encirclements).\\
+Stable-$L$ case: stable iff \emph{no} encirclements of $-1$.\\
+CL poles satisfy $L(s)=-1$.\\
+\sub{Real-axis crossing} Nyquist evaluates $G$ along the imag.\ axis, so to find where it crosses $(\alpha,0)$: set $G(s){=}\alpha$ and solve — the root is \textbf{purely imaginary} $s{=}\pm j\omega$.
+
+% ---------------------------------------------------
+\sect{15. Stability Margins (Lec 10,11)}
+Crossover $\omega_{gc}$: $|L(j\omega_{gc})|=1$ (0 dB).\\
+\sub{Gain margin} $g_m=1/|L(j\omega_{pc})|$ at phase $=-180^\circ$. \textit{Find where Nyquist crosses $-$ve real axis; GM = inverse of that magnitude. (+ve).}\\
+\sub{Phase margin} $\varphi_m=180^\circ+\angle L(j\omega_{gc})$. \textit{Find where Nyquist hits unit circle; PM = angle from that point to $-$ve $x$-axis.}\\
+\sub{Stability margin} $s_m$=closest dist of Nyquist to $-1$; $|S(j\omega)|=1/\text{dist to }(-1)$. \textit{Shortest distance from Nyquist curve to $(-1,0)$.}\\
+$PM=2\sin^{-1}\!\big(\tfrac{1}{2|S(j\omega_c)|}\big)$.\\
+\sub{Time delay} $e^{-\tau s}$: $|{\cdot}|=1$, adds phase $-\omega\tau$. Max delay $\tau_{max}=\varphi_m/\omega_{gc}$.\\
+\sub{Bode gain-phase} $\angle L(j\omega_{gc})\approx 90^\circ\tfrac{d\log|L|}{d\log\omega}$; $-20$dB/dec$\to-90^\circ$, $-40\to-180^\circ$.
+
+% ---------------------------------------------------
+\sect{16. Sensitivity / Gang of Four (Lec 11)}
+\[ S=\frac{1}{1+PC},\qquad T=\frac{PC}{1+PC},\qquad S+T=1 \]
+Output: $\eta=Tr+PS\,d-Tn$; error $r-\eta=Sr-SPd+Tn$.\\
+$\begin{pmatrix}\eta\\e\\u\end{pmatrix}=\begin{pmatrix}T&PS&-T\\S&-PS&-S\\CS&-T&-CS\end{pmatrix}\begin{pmatrix}r\\d\\n\end{pmatrix}$\\[1pt]
+Disturbance: $\eta=PS\,d$. $|S|{<}1$ attenuates; $|S|{=}0$ eliminates; $|S|{>}1$ worsens.\\
+$S$ measures sensitivity of CL to plant uncertainty.\\
+\sub{Loop shaping — why} shape $L{=}PC$ to balance performance vs stability.\\
+\sub{how} (i) high gain / integrator at low $\omega$ $\to$ tracking + reject $d$ ($S{\approx}0$); (ii) low gain + steep roll-off at high $\omega$ $\to$ reject noise $n$ ($T{\approx}0$); (iii) gentle slope ($\approx{-}20$dB/dec) near $\omega_{gc}$ $\to$ keep phase margin.\\
+Or pick desired $L$ (e.g. $\tfrac{\alpha}{s}$, $\alpha$ sets $\omega_{gc}$) then $C{=}L/P$ — avoid cancelling unstable poles/zeros.
+
+% ---------------------------------------------------
+\sect{17. Fundamental Limitations (Lec 11,12)}
+\textbf{(1)} $S+T=1$ — seesaw trade-off.\\
+\textbf{(2)} Gain–phase relation — steep roll-off $\Rightarrow$ phase lag, low PM.\\
+\textbf{(3)} Interpolation constraints — RHP poles/zeros can't be hidden.\\
+\textbf{(4)} Bode sensitivity integral (waterbed):
+\[ \int_0^\infty\log|S(j\omega)|\,d\omega=\pi\sum_k p_k \]
+$p_k$=unstable open-loop poles; push $|S|$ down somewhere $\Rightarrow$ up elsewhere.
+
+% ---------------------------------------------------
+% \sect{18. PID Tuning — Ziegler--Nichols}
+% \sub{Step-response (reaction curve)} fit gain $K$, delay $\tau$, slope; $a=K\tau/\text{(time const)}$ intercept:\\
+% \begin{tabular}{@{}llll@{}}
+%  & $k_p$ & $T_i$ & $T_d$\\
+% P & $1/a$ & & \\
+% PI & $0.9/a$ & $\tau/0.3$ & \\
+% PID & $1.2/a$ & $\tau/0.5$ & $0.5\tau$
+% \end{tabular}\\[1pt]
+% \sub{Frequency (ultimate gain)} critical gain $k_c$, period $T_c=2\pi/\omega_c$:\\
+% \begin{tabular}{@{}llll@{}}
+%  & $k_p$ & $T_i$ & $T_d$\\
+% P & $0.5k_c$ & & \\
+% PI & $0.45k_c$ & $T_c/1.2$ & \\
+% PID & $0.6k_c$ & $T_c/2$ & $T_c/8$
+% \end{tabular}\\[1pt]
+% Sluggish $\Rightarrow k_p\!\uparrow$ or $T_i\!\downarrow$; oscillatory $\Rightarrow k_p\!\downarrow$ or $T_d\!\uparrow$; SS error $\Rightarrow$ add integral.
+
+% ---------------------------------------------------
+\sect{19. Block Diagram Algebra}
+\sub{Series} $G_1G_2$. \sub{Parallel} $G_1\pm G_2$.\\
+\sub{Neg. feedback} $\dfrac{G}{1+GH}$; unity: $\dfrac{G}{1+G}$.\\
+\sub{Pos. feedback} $\dfrac{G}{1-GH}$.\\
+$L=PC$ (loop), $G_{yr}=\tfrac{L}{1+L}$, $G_{er}=\tfrac{1}{1+L}$.\\
+\sub{Cascaded SS} $S_1\!\to\!S_2$ in series: get $G_i{=}C_i(sI{-}A_i)^{-1}B_i{+}D_i$ for each, then $G_{tot}{=}G_2G_1$ (multiply) — easier than building one big $A$.
+
+% ---------------------------------------------------
+\sect{20. Quick Reference / Exam Tips}
+\begin{itemize}
+\item Stable $\Leftrightarrow$ all poles/eigenvalues in open LHP.
+\item Reachable: $\det[B\ AB]\neq0$; Observable: $\det[C;CA]\neq0$ (2nd order).
+\item PD design: pick $\zeta$ from $M_p$, $\omega_n$ from $t_s$, match denom.
+\item Nyquist through $(\alpha,0)$: set $G(s)=\alpha$; root is purely imaginary $s{=}\pm j\omega$.
+\item Zero SS error tracking: use \textbf{integral} action (robust) or feedforward $N$ (needs exact model).
+\item Real-world uncertainty: parameter errors, disturbances, sensor noise, unmodelled nonlinearity.
+\end{itemize}
+\sub{PID vs state-feedback} \textbf{PID}: model-free, mainly SISO, heuristic/robust, simple to tune, limited pole control. \textbf{State-FB}: needs accurate model + full state (or observer), handles MIMO, gives exact pole placement.\\
+\sub{Useful} $\zeta{=}0.5\!\Rightarrow\!M_p{\approx}16\%$; $\zeta{=}0.707\!\Rightarrow\!M_p{\approx}4.3\%$; $\zeta{=}0.6\!\Rightarrow\!M_p{\approx}9.5\%$.\\
+$\sqrt{1-\zeta^2}$ at $\zeta{=}0.707$ is $0.707$.
+
+% ---------------------------------------------------
+\sect{21. Math Toolbox}
+\sub{Quadratic} $as^2{+}bs{+}c{=}0\Rightarrow s=\dfrac{-b\pm\sqrt{b^2-4c\,a}}{2a}$.\\
+\sub{$2\times2$ inverse} $\begin{pmatrix}a&b\\c&d\end{pmatrix}^{-1}=\dfrac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$.\\
+\sub{$2\times2$ eigenvalues} $\det(\lambda I-A)=\lambda^2-\mathrm{tr}(A)\lambda+\det(A)$,
+\[ \lambda=\tfrac{\mathrm{tr}\pm\sqrt{\mathrm{tr}^2-4\det}}{2}. \]
+\sub{Resolvent} $(sI-A)^{-1}=\dfrac{\mathrm{adj}(sI-A)}{\det(sI-A)}$.\\
+\sub{Euler} $e^{j\theta}=\cos\theta+j\sin\theta$; $|a+jb|=\sqrt{a^2+b^2}$, $\angle=\arctan\tfrac{b}{a}$.\\
+\sub{Complex divide} $\tfrac{1}{a+jb}=\tfrac{a-jb}{a^2+b^2}$.\\
+\sub{dB} $20\log_{10}2\!\approx\!6$, $20\log_{10}10\!=\!20$, $20\log_{10}\tfrac12\!\approx\!-6$.\\
+\sub{Partial fractions} $\tfrac{1}{(s+p_1)(s+p_2)}=\tfrac{A}{s+p_1}+\tfrac{B}{s+p_2}$, $A=\tfrac{1}{p_2-p_1}$.\\
+\sub{Common integrals} $\int e^{-at}dt=-\tfrac1a e^{-at}$; $\int_0^\infty e^{-at}dt=\tfrac1a$ ($a{>}0$).\\
+\sub{Sin/cos deriv} $\tfrac{d}{dt}\sin\omega t=\omega\cos\omega t$, $\tfrac{d}{dt}\cos\omega t=-\omega\sin\omega t$.\\
+\sub{Sin/cos integ} $\int\sin\omega t\,dt=-\tfrac1\omega\cos\omega t$, $\int\cos\omega t\,dt=\tfrac1\omega\sin\omega t$.\\
+\sub{Trig} $\sin\theta=\tfrac{e^{j\theta}-e^{-j\theta}}{2j}$, $\cos\theta=\tfrac{e^{j\theta}+e^{-j\theta}}{2}$.
+
+% ---------------------------------------------------
+% \sect{22. Worked Patterns}
+% \sub{First-order ID} $x(0){=}1,\ x(2){=}e^{-8}$, $u{=}0$: $e^{-2a}{=}e^{-8}\Rightarrow a{=}4$.\\
+% \sub{Step of $\dot x{+}ax{=}1$, $x(0){=}0$} try $x{=}be^{-at}{+}c$: $ac{=}1$, $b{+}c{=}0\Rightarrow c{=}\tfrac1a,b{=}-\tfrac1a$. So $x{=}\tfrac1a(1-e^{-at})$.\\
+% \sub{Set $x(\infty){=}X$} $ax(\infty){=}u\Rightarrow u{=}aX$.\\
+% \sub{PD on $\ddot x{+}3\dot x{+}2x{=}u$} want $t_s{\approx}2$, $M_p{\approx}5\%$:\\
+% $\zeta{=}\tfrac{\sqrt2}{2}$; $t_s{=}\tfrac{4}{\zeta\omega_n}{=}2\Rightarrow\omega_n{=}2\sqrt2$; target $s^2{+}4s{+}8$.\\
+% $\Rightarrow K_d{=}1,\ K_p{=}6$.\\
+% \sub{Observer poles $-1,-2$} for $A{=}\begin{psmallmatrix}0&1\\-1&-1\end{psmallmatrix}$, $C{=}[0\ 1]$:\\
+% $\det(sI{-}(A{-}LC)){=}s^2{+}(1{+}l_2)s{+}(1{-}l_1)\overset{!}{=}s^2{+}3s{+}2$\\
+% $\Rightarrow l_1{=}-1,\ l_2{=}2$.\\
+% \sub{Nyquist crossing $(-0.5,0)$} set $G(s){=}-0.5$, cross-multiply, solve $\Rightarrow s^2{=}-1$, $s{=}\pm j$.\\
+% \sub{Sensitivity, $P{=}\tfrac{1}{s(s+1)}$, $C{=}s{+}3$}
+% \[ S{=}\frac{s^2{+}s}{s^2{+}2s{+}3},\quad T{=}\frac{s{+}3}{s^2{+}2s{+}3} \]
+% \sub{Loop poles via $L(s){=}-1$} solve for $s$; or set $\tfrac{L}{1+L}{=}T_{des}\Rightarrow L{=}\tfrac{T_{des}}{1-T_{des}}$.
+
+\end{multicols}
+\end{document}
