@@ -3,3 +3,6 @@
 *.fls
 *.fdb_latexmk
 *.synctex.gz
+main_change*.pdf
+main_original.pdf
+.claude/
