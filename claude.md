@@ -1,5 +1,15 @@
 # AMME3500 Formula Sheet Review & Project Context
 
+## Git Workflow (MANDATORY)
+After **every edit** to any file in this project, always:
+1. `git add <changed files>`
+2. `git commit -m "<short description of change>"`
+3. `git push`
+
+Do this automatically without being asked. Never leave uncommitted changes.
+
+---
+
 ## Project Overview
 **Course:** AMME3500 System Dynamics and Control (University of Sydney)  
 **Assessable Content:** Past exams (2022, 2023, 2024), lecture slides (Lec 1–12), tutorial questions & solutions (Weeks 2–11)  
