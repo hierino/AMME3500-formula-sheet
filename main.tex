@@ -310,7 +310,7 @@ $L(s)=C(s)P(s)$ (loop TF), $T(s)=\tfrac{L(s)}{1+L(s)}$, $S(s)=\tfrac{1}{1+L(s)}$
 \[ \dot x_1{=}A_1x_1{+}B_1u_1,\ y_1{=}C_1x_1;\quad \dot x_2{=}A_2x_2{+}B_2u_2,\ y_2{=}C_2x_2 \]
 Sub interconnection $u_2{=}y_1{=}C_1x_1$ into $\dot x_2$; stack $x{=}[x_1;x_2]$:
 \[ \dot x=\begin{bmatrix}A_1&0\\B_2C_1&A_2\end{bmatrix}x+\begin{bmatrix}B_1\\0\end{bmatrix}u_1,\quad y_2=\begin{bmatrix}0&C_2\end{bmatrix}x \]
-($A$ block lower-triangular $\Rightarrow$ eig$(A)=$ eig$(A_1)\cup$ eig$(A_2)$ — quick pole check).\\
+% ($A$ block lower-triangular $\Rightarrow$ eig$(A)=$ eig$(A_1)\cup$ eig$(A_2)$ — quick pole check).\\
 % \sub{Reachability/observability of $S$} test full $W{=}[B\ AB\ \cdots]$, $W_o{=}[C;CA;\cdots]$ on the \emph{combined} system — \textbf{not} automatic even if $S_1,S_2$ individually are (pole-zero cancellation between $G_1,G_2$ can hide a mode).\\
 \sub{TF} get $G_i{=}C_i(sI{-}A_i)^{-1}B_i{+}D_i$ for each subsystem, then $G_{tot}{=}G_2G_1$ (multiply) — far easier than inverting the big $(sI{-}A)$.
 
