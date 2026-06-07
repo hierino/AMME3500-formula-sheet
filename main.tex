@@ -146,10 +146,10 @@ zero at $s=-K_P/K_D$.\\
 match to $s^2+2\zeta\omega_n s+\omega_n^2$.
 
 % ---------------------------------------------------
-\sect{8. Effect of Zeros (Lec 5)}
-$G(s)=\frac{b_1s+b_0}{s+a}$, zero at $s=-b_0/b_1$.\\
-$b_1{>}0,b_0{>}0$: LHP zero, \textbf{min-phase}, kick same dir.\\
-$b_1{<}0,b_0{>}0$: RHP zero, \textbf{non-min-phase}, "wrong-way" initial response, hard to control.
+% \sect{8. Effect of Zeros (Lec 5)}
+% $G(s)=\frac{b_1s+b_0}{s+a}$, zero at $s=-b_0/b_1$.\\
+% $b_1{>}0,b_0{>}0$: LHP zero, \textbf{min-phase}, kick same dir.\\
+% $b_1{<}0,b_0{>}0$: RHP zero, \textbf{non-min-phase}, "wrong-way" initial response, hard to control.
 
 % ===================================================
 \sect{9. State-Space Response (Lec 6)}
@@ -192,7 +192,7 @@ Design: $\det(sI-(A-LC))\overset{!}{=}$ desired poly, match coeffs.\\
 
 % ===================================================
 \sect{12. Frequency Response (Lec 9)}
-Input $A\sin\omega t\Rightarrow y=A|G(j\omega)|\sin(\omega t+\phi)$ (similarly $\cos\omega t\Rightarrow y_{ss}=|G(j\omega)|\cos(\omega t+\angle G(j\omega))$).\\
+Input $A\sin\omega t\Rightarrow y_{ss}=A|G(j\omega)|\sin(\omega t+\phi)$\\
 $G(j\omega)=|G(j\omega)|e^{j\phi},\ \phi=\angle G=\arctan\tfrac{\mathrm{Im}}{\mathrm{Re}}$.\\
 $\angle G=\sum\angle(\text{num})-\sum\angle(\text{den})$: \textbf{numerator} (zeros) add $+$ve phase, \textbf{denominator} (poles) add $-$ve phase.\\
 \sub{Complex algebra} $z_1z_2$: multiply mags, add phases; $z_1/z_2$: divide mags, subtract phases.\\
@@ -205,11 +205,11 @@ real $\Rightarrow$ phase $0^\circ/180^\circ$ (no lag); $X\!\to\!\infty$ as $\ome
 
 % ---------------------------------------------------
 \sect{13. Bode Plots (Lec 9--10)}
-Mag in dB: $20\log_{10}|G(j\omega)|$. $K=10^{dB/20}$, $dB=20\log_{10}K$. $\times10\!\Rightarrow\!20$dB; $1\!\to\!0$dB.\\
+Mag in dB: $20\log_{10}|G(j\omega)|$. $K=10^{dB/20}$, $dB=20\log_{10}K$. $\times10\!\Rightarrow\!20$dB; $1\!\to\!0$dB.
 \sub{Standard form} factor so each bracket starts with 1; constant out front $=$ DC gain $K$:
 \[ G(s)=\frac{K(\tfrac sa{+}1)}{s^n(\tfrac sb{+}1)} \]
-Start height (flat, low $\omega$) $=20\log_{10}K$ dB. If sloped (i.e pole @ 0), choose small $\omega$ and S.H. $=20\log_{10}\left(\frac{K}{\omega}\right)$.\\
-\sub{Mag slopes} (added at break freq $\omega{=}|p|,|z|$):
+Start height (flat, low $\omega$) $=20\log_{10}K$ dB. If sloped (i.e pole @ 0), choose small $\omega$ and S.H. $=20\log_{10}\left(\frac{K}{\omega}\right)\Rightarrow K=\omega\cdot 10^{\mathrm{S.H}/20}$.\\
+\sub{Mag slopes} (added at break freq $\omega{=}|p|,|z|$):\\
 \begin{tabular}{@{}ll@{}}
 \hline
 DC gain $K$ & flat at $20\log K$\\
@@ -236,7 +236,7 @@ cplx poles @ $\omega_n$ & $-180^\circ$ total\\
 \sub{Bode $\to$ TF} \textbf{(1)} DC gain $K{=}10^{X\text{dB}/20}$ from flat low-$\omega$ ($\omega=1$ if slanted start). \textbf{(2)} initial slope: flat$=$no int., $-20$/dec$=$one $1/s$, $-40{=}1/s^2$, $+20{=}s$. \textbf{(3)} corners where slope \emph{changes}: extra $-20\Rightarrow$ pole, $+20\Rightarrow$ zero, $\mp40\Rightarrow$ cplx pair @ $\omega_n$. \textbf{(4)} phase confirms: start $0/{-}90/{-}180^\circ{=}0/1/2$ integrators; drop @ corner$=$pole, rise$=$zero. \textbf{(5)} assemble:
 \[ G(s)=\frac{K\,s^{\text{pos}}(s{+}z_1)(s{+}z_2)\cdots}{s^{\text{int}}(s{+}p_1)(s{+}p_2)\cdots} \]
 \sub{Sanity} final slope $=-20(\#p{-}\#z)$ dB/dec; final phase $=-90^\circ(\#p{-}\#z)$; DC check: sub $s{=}0$.\\
-\sub{GM \& PM on Bode} $\mathbf{GM}$ = magnitude (dB) at phase $=-180^\circ$; $\mathbf{PM}$ = phase (deg) at magnitude $0$ dB.\\
+\sub{GM \& PM on Bode} $\mathbf{GM}$ = magnitude (dB) at phase $=-180^\circ$; $\mathbf{PM}$ = phase (deg) at magnitude $0$ dB.
 % \sub{Ex.} flat $+20$dB, corner $\omega{=}2$ ($\to{-}20$), corner $\omega{=}20$ ($\to{-}40$), phase $0\!\to\!{-}90\!\to\!{-}180^\circ$: $K{=}10$, poles $2,20$:
 % \[ G=\frac{10}{(\tfrac s2{+}1)(\tfrac{s}{20}{+}1)}=\frac{400}{(s{+}2)(s{+}20)} \]
 
@@ -256,8 +256,8 @@ Crossover $\omega_{gc}$: $|L(j\omega_{gc})|=1$ (0 dB).\\
 \sub{Phase margin} $\varphi_m=180^\circ+\angle L(j\omega_{gc})$. \textit{Find where Nyquist hits unit circle; PM = angle from that point to $-$ve $x$-axis.}\\
 \sub{Stability margin} $s_m$=closest dist of Nyquist to $-1$; $|S(j\omega)|=1/\text{dist to }(-1)$. \textit{Shortest distance from Nyquist curve to $(-1,0)$.} $|S(j\omega)|=$ sensitivity. \\
 $PM=2\sin^{-1}\!\big(\tfrac{1}{2|S(j\omega_c)|}\big)$.\\
-\sub{Time delay} $e^{-\tau s}$: $|{\cdot}|=1$, adds phase $-\omega\tau$. Max delay $\tau_{max}=\varphi_m/\omega_{gc}$.\\
-\sub{Bode gain-phase} $\angle L(j\omega_{gc})\approx 90^\circ\tfrac{d\log|L|}{d\log\omega}$; $-20$dB/dec$\to-90^\circ$, $-40\to-180^\circ$.
+\sub{Time delay} Max delay $\tau_{max}=\varphi_m/\omega_{gc}$.
+% \sub{Bode gain-phase} $\angle L(j\omega_{gc})\approx 90^\circ\tfrac{d\log|L|}{d\log\omega}$; $-20$dB/dec$\to-90^\circ$, $-40\to-180^\circ$.
 
 % ---------------------------------------------------
 \sect{16. Sensitivity / Gang of Four (Lec 11)}
@@ -305,7 +305,7 @@ $p_k$=unstable open-loop poles; push $|S|$ down somewhere $\Rightarrow$ up elsew
 \sub{Series} $G_1G_2$. \sub{Parallel} $G_1\pm G_2$.\\
 \sub{Neg. feedback} $\dfrac{G}{1+GH}$; unity: $\dfrac{G}{1+G}$.\\
 \sub{Pos. feedback} $\dfrac{G}{1-GH}$.\\
-$L(s)=C(s)P(s)$ (loop TF), $T(s)=\tfrac{L(s)}{1+L(s)}$, $G_{er}=\tfrac{1}{1+L(s)}$ (sens. fn maps disturbance on plant output to final output).\\
+$L(s)=C(s)P(s)$ (loop TF), $T(s)=\tfrac{L(s)}{1+L(s)}$, $S(s)=\tfrac{1}{1+L(s)}$ (sensitivity function maps disturbance on plant output to final output).\\
 \sub{Cascaded SS} $S_1\!\to\!S_2$ in series: get $G_i{=}C_i(sI{-}A_i)^{-1}B_i{+}D_i$ for each, then $G_{tot}{=}G_2G_1$ (multiply) — easier than building one big $A$.
 
 % ---------------------------------------------------
@@ -324,20 +324,20 @@ $\sqrt{1-\zeta^2}$ at $\zeta{=}0.707$ is $0.707$.
 
 % ---------------------------------------------------
 \sect{21. Math Toolbox}
-\sub{Quadratic} $as^2{+}bs{+}c{=}0\Rightarrow s=\dfrac{-b\pm\sqrt{b^2-4c\,a}}{2a}$.\\
+% \sub{Quadratic} $as^2{+}bs{+}c{=}0\Rightarrow s=\dfrac{-b\pm\sqrt{b^2-4c\,a}}{2a}$.\\
 \sub{$2\times2$ inverse} $\begin{pmatrix}a&b\\c&d\end{pmatrix}^{-1}=\dfrac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$.\\
 \sub{$3\times3$ det} $\det\begin{psmallmatrix}a&b&c\\d&e&f\\g&h&i\end{psmallmatrix}=a(ei{-}fh)-b(di{-}fg)+c(dh{-}eg)$.\\
-\sub{$2\times2$ eigenvalues} $\det(\lambda I-A)=\lambda^2-\mathrm{tr}(A)\lambda+\det(A)$,
-\[ \lambda=\tfrac{\mathrm{tr}\pm\sqrt{\mathrm{tr}^2-4\det}}{2}. \]
-\sub{Resolvent} $(sI-A)^{-1}=\dfrac{\mathrm{adj}(sI-A)}{\det(sI-A)}$.\\
-\sub{Euler} $e^{j\theta}=\cos\theta+j\sin\theta$; $|a+jb|=\sqrt{a^2+b^2}$, $\angle=\arctan\tfrac{b}{a}$.\\
+\sub{$2\times2$ eigenvalues} $\det(\lambda I-A)=\lambda^2-\mathrm{tr}(A)\lambda+\det(A)$\\
+% \[ \lambda=\tfrac{\mathrm{tr}\pm\sqrt{\mathrm{tr}^2-4\det}}{2}. \]
+% \sub{Resolvent} $(sI-A)^{-1}=\dfrac{\mathrm{adj}(sI-A)}{\det(sI-A)}$.\\
+% \sub{Euler} $e^{j\theta}=\cos\theta+j\sin\theta$; $|a+jb|=\sqrt{a^2+b^2}$, $\angle=\arctan\tfrac{b}{a}$.\\
 % \sub{Complex divide} $\tfrac{1}{a+jb}=\tfrac{a-jb}{a^2+b^2}$.\\
 % \sub{dB} $20\log_{10}2\!\approx\!6$, $20\log_{10}10\!=\!20$, $20\log_{10}\tfrac12\!\approx\!-6$.\\
-\sub{Partial fractions} $\tfrac{1}{(s+p_1)(s+p_2)}=\tfrac{A}{s+p_1}+\tfrac{B}{s+p_2}$, $A=\tfrac{1}{p_2-p_1}$.\\
+% \sub{Partial fractions} $\tfrac{1}{(s+p_1)(s+p_2)}=\tfrac{A}{s+p_1}+\tfrac{B}{s+p_2}$, $A=\tfrac{1}{p_2-p_1}$.\\
 \sub{Common integrals} $\int e^{-at}dt=-\tfrac1a e^{-at}$; $\int_0^\infty e^{-at}dt=\tfrac1a$ ($a{>}0$).\\
 \sub{Sin/cos deriv} $\tfrac{d}{dt}\sin\omega t=\omega\cos\omega t$, $\tfrac{d}{dt}\cos\omega t=-\omega\sin\omega t$.\\
 \sub{Sin/cos integ} $\int\sin\omega t\,dt=-\tfrac1\omega\cos\omega t$, $\int\cos\omega t\,dt=\tfrac1\omega\sin\omega t$.\\
-\sub{Trig} $\sin\theta=\tfrac{e^{j\theta}-e^{-j\theta}}{2j}$, $\cos\theta=\tfrac{e^{j\theta}+e^{-j\theta}}{2}$.
+% \sub{Trig} $\sin\theta=\tfrac{e^{j\theta}-e^{-j\theta}}{2j}$, $\cos\theta=\tfrac{e^{j\theta}+e^{-j\theta}}{2}$.
 
 % ---------------------------------------------------
 % \sect{22. Worked Patterns}
