@@ -65,6 +65,7 @@ For $\dot x=f(x,u)$:\\
 \textbf{(1)} Equilibrium $f(x_e,u_e)=0$.\\
 \textbf{(2)} Taylor (1st order):
 \[ \dot x\approx f(x_e,u_e)+\tfrac{\partial f}{\partial x}\Big|_e(x-x_e)+\tfrac{\partial f}{\partial u}\Big|_e(u-u_e) \]
+General (scalar) form: $F(v_0{+}\delta v)\approx F(v_0)+\left.\dfrac{\partial F}{\partial v}\right|_{v_0}(v-v_0)$.\\
 \textbf{(3)} Deviation vars $\delta x=x-x_e,\ \delta u=u-u_e$:
 \[ \dot{\delta x}\approx \tfrac{\partial f}{\partial x}\big|_e\,\delta x+\tfrac{\partial f}{\partial u}\big|_e\,\delta u \]
 Multivariable: $A=\tfrac{\partial f}{\partial \mathbf x}\big|_e$ (Jacobian), $B=\tfrac{\partial f}{\partial u}\big|_e$.
@@ -91,7 +92,18 @@ $x(\infty)=\tfrac{K_Pr}{K_P+a}$, error $e(\infty)=r\,\tfrac{a}{K_P+a}$.\\
 With disturbance $d$, noise $n$:
 \[ x_{ss}=\frac{K_P(r-n)+d}{a+K_P} \]
 Large $K_P\Rightarrow$ small error (\textbf{feedback stabilisation}: pick $K_P>-a$). \textbf{Integral} action $\Rightarrow$ zero steady-state error.\\
-\sub{SS error (unity fb, unit step)} $e(\infty)=\dfrac{1}{1+G(0)}$ ($G(0)$=DC loop gain; position const $K_p{=}G(0)$).
+\sub{SS error (unity fb, unit step)} $e(\infty)=\dfrac{1}{1+G(0)}$ ($G(0)$=DC loop gain; position const $K_p{=}G(0)$).\\
+\sub{System type} \# poles of $L{=}CG$ at $s{=}0$: $0,1,2\Rightarrow$ Type $0,1,2$.\par\noindent
+{\footnotesize\renewcommand{\arraystretch}{0.7}
+\begin{tabular}{@{}lccc@{}}
+\hline
+& Type 0 & Type 1 & Type 2\\
+\hline
+Step & $\frac{1}{1+K_p}$ & $0$ & $0$\\
+Ramp & $\infty$ & $\frac{1}{K_v}$ & $0$\\
+Parab. & $\infty$ & $\infty$ & $\frac{1}{K_a}$\\
+\hline
+\end{tabular}\\[-2pt]}
 
 % ===================================================
 \sect{5. Homogeneous Solns \& Poles (Lec 4)}
@@ -113,11 +125,7 @@ Poles $s=-\zeta\omega_n\pm j\omega_n\sqrt{1-\zeta^2}=-\sigma\pm j\omega_d$.
 $\zeta$ = sine of angle from imag. axis. Underdamped: $0<\zeta<1$.\\
 \sub{Envelope} $x(t)=e^{-\sigma t}\sin(\omega_d t)$.
 
-\textbf{Response specifications:}
-\[ M_p=e^{-\pi\zeta/\sqrt{1-\zeta^2}}\quad(\text{overshoot}) \]
-\[ t_p=\frac{\pi}{\omega_d}\quad(\text{peak time}) \]
-\[ t_s\approx\frac{4}{\sigma}=\frac{4}{\zeta\omega_n}\quad(2\%\ \text{settling}) \]
-\[ t_r\approx\frac{1.8}{\omega_n}\quad(\text{rise }10\text{--}90\%) \]
+\textbf{Response specs:} $M_p{=}e^{-\pi\zeta/\sqrt{1-\zeta^2}}$ (overshoot), $t_p{=}\dfrac{\pi}{\omega_d}$ (peak time), $t_s{\approx}\dfrac{4}{\zeta\omega_n}$ ($2\%$ settle), $t_r{\approx}\dfrac{1.8}{\omega_n}$ (rise $10$--$90\%$).
 % $5\%$ overshoot $\Rightarrow \zeta\approx\tfrac{\sqrt2}{2}\approx0.707$.
 
 % ---------------------------------------------------
@@ -184,7 +192,7 @@ Design: $\det(sI-(A-LC))\overset{!}{=}$ desired poly, match coeffs.\\
 
 % ===================================================
 \sect{12. Frequency Response (Lec 9)}
-Input $A\sin\omega t\Rightarrow y=A|G(j\omega)|\sin(\omega t+\phi)$.\\
+Input $A\sin\omega t\Rightarrow y=A|G(j\omega)|\sin(\omega t+\phi)$ (similarly $\cos\omega t\Rightarrow y_{ss}=|G(j\omega)|\cos(\omega t+\angle G(j\omega))$).\\
 $G(j\omega)=|G(j\omega)|e^{j\phi},\ \phi=\angle G=\arctan\tfrac{\mathrm{Im}}{\mathrm{Re}}$.\\
 $\angle G=\sum\angle(\text{num})-\sum\angle(\text{den})$: \textbf{numerator} (zeros) add $+$ve phase, \textbf{denominator} (poles) add $-$ve phase.\\
 \sub{Complex algebra} $z_1z_2$: multiply mags, add phases; $z_1/z_2$: divide mags, subtract phases.\\
@@ -209,7 +217,7 @@ integrator $1/s^n$ & $-20n$ dB/dec from $\omega{\to}0$\\
 diff.\ $s$ & $+20$ dB/dec\\
 pole $(\tfrac sb{+}1)^{-1}$ & $-20$ dB/dec after $\omega{=}b$\\
 zero $(\tfrac sa{+}1)$ & $+20$ dB/dec after $\omega{=}a$\\
-cplx poles @ $\omega_n$ & $-40$ dB/dec; peak $\tfrac{1}{2\zeta}$ at $\omega_n$\\
+cplx poles @ $\omega_n$ & $-40$ dB/dec; peak $M_z=\tfrac{1}{2\zeta\sqrt{1-\zeta^2}}$ at $\omega_n$\\
 cplx zeros @ $\omega_n$ & $+40$ dB/dec\\
 \hline
 \end{tabular}\\
@@ -254,6 +262,7 @@ $PM=2\sin^{-1}\!\big(\tfrac{1}{2|S(j\omega_c)|}\big)$.\\
 % ---------------------------------------------------
 \sect{16. Sensitivity / Gang of Four (Lec 11)}
 \[ S=\frac{1}{1+PC},\qquad T=\frac{PC}{1+PC},\qquad S+T=1 \]
+$S{+}T{=}1$: a seesaw — low $S$ (tracking/dist.\ rejection) vs.\ low $T$ (robust to noise/model uncertainty); shape each small in different bands.\\
 % Output: $\eta=Tr+PS\,d-Tn$; error $r-\eta=Sr-SPd+Tn$.\\
 % $\begin{pmatrix}\eta\\e\\u\end{pmatrix}=\begin{pmatrix}T&PS&-T\\S&-PS&-S\\CS&-T&-CS\end{pmatrix}\begin{pmatrix}r\\d\\n\end{pmatrix}$\quad ($r$=ref, $d$=dist, $n$=noise; set other 2$=0$ to solve each TF)\\[1pt]
 \sub{3 TFs} $d$, $r$, $n$. $\to$ Set other 2 to 0 and solve.\\
@@ -261,7 +270,8 @@ Disturbance: $\eta=PS\,d$. $|S|{<}1$ attenuates; $|S|{=}0$ eliminates; $|S|{>}1$
 $S$ measures sensitivity of CL to plant uncertainty.\\
 \sub{Loop shaping — why} shape $L{=}PC$ to balance performance vs stability.\\
 \sub{how} (i) high gain / integrator at low $\omega$ $\to$ tracking + reject $d$ ($S{\approx}0$); (ii) low gain + steep roll-off at high $\omega$ $\to$ reject noise $n$ ($T{\approx}0$); (iii) gentle slope ($\approx{-}20$dB/dec) near $\omega_{gc}$ $\to$ keep phase margin.\\
-Or pick desired $L$ (e.g. $\tfrac{\alpha}{s}$, $\alpha$ sets $\omega_{gc}$) then $C{=}L/P$ — avoid cancelling unstable poles/zeros.
+Or pick desired $L$ (e.g. $\tfrac{\alpha}{s}$, $\alpha$ sets $\omega_{gc}$) then $C{=}L/P$ — avoid cancelling unstable poles/zeros.\\
+\sub{Robustness} relative model error $\delta m(s){=}\dfrac{\delta G(s)}{G(s)}$; robust stability $\Leftarrow|T(j\omega)|<\dfrac{1}{|\delta m(j\omega)|}$ — keep $T$ small where $\delta m$ large (high $\omega$).
 
 % ---------------------------------------------------
 \sect{17. Fundamental Limitations (Lec 11,12)}
