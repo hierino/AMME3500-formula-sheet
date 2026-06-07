@@ -224,6 +224,7 @@ cplx poles @ $\omega_n$ & $-180^\circ$ total\\
 \sub{Bode $\to$ TF} \textbf{(1)} DC gain $K{=}10^{X\text{dB}/20}$ from flat low-$\omega$ ($\omega=1$ if slanted start). \textbf{(2)} initial slope: flat$=$no int., $-20$/dec$=$one $1/s$, $-40{=}1/s^2$, $+20{=}s$. \textbf{(3)} corners where slope \emph{changes}: extra $-20\Rightarrow$ pole, $+20\Rightarrow$ zero, $\mp40\Rightarrow$ cplx pair @ $\omega_n$. \textbf{(4)} phase confirms: start $0/{-}90/{-}180^\circ{=}0/1/2$ integrators; drop @ corner$=$pole, rise$=$zero. \textbf{(5)} assemble:
 \[ G(s)=\frac{K\,s^{\text{pos}}(s{+}z_1)(s{+}z_2)\cdots}{s^{\text{int}}(s{+}p_1)(s{+}p_2)\cdots} \]
 \sub{Sanity} final slope $=-20(\#p{-}\#z)$ dB/dec; final phase $=-90^\circ(\#p{-}\#z)$; DC check: sub $s{=}0$.\\
+\sub{GM \& PM on Bode} $\mathbf{GM}$ = magnitude (dB) at phase $=-180^\circ$; $\mathbf{PM}$ = phase (deg) at magnitude $0$ dB.\\
 \sub{Ex.} flat $+20$dB, corner $\omega{=}2$ ($\to{-}20$), corner $\omega{=}20$ ($\to{-}40$), phase $0\!\to\!{-}90\!\to\!{-}180^\circ$: $K{=}10$, poles $2,20$:
 \[ G=\frac{10}{(\tfrac s2{+}1)(\tfrac{s}{20}{+}1)}=\frac{400}{(s{+}2)(s{+}20)} \]
 
@@ -250,7 +251,7 @@ $PM=2\sin^{-1}\!\big(\tfrac{1}{2|S(j\omega_c)|}\big)$.\\
 \sect{16. Sensitivity / Gang of Four (Lec 11)}
 \[ S=\frac{1}{1+PC},\qquad T=\frac{PC}{1+PC},\qquad S+T=1 \]
 Output: $\eta=Tr+PS\,d-Tn$; error $r-\eta=Sr-SPd+Tn$.\\
-$\begin{pmatrix}\eta\\e\\u\end{pmatrix}=\begin{pmatrix}T&PS&-T\\S&-PS&-S\\CS&-T&-CS\end{pmatrix}\begin{pmatrix}r\\d\\n\end{pmatrix}$\\[1pt]
+$\begin{pmatrix}\eta\\e\\u\end{pmatrix}=\begin{pmatrix}T&PS&-T\\S&-PS&-S\\CS&-T&-CS\end{pmatrix}\begin{pmatrix}r\\d\\n\end{pmatrix}$\quad ($r$=ref, $d$=dist, $n$=noise; set other 2$=0$ to solve each TF)\\[1pt]
 Disturbance: $\eta=PS\,d$. $|S|{<}1$ attenuates; $|S|{=}0$ eliminates; $|S|{>}1$ worsens.\\
 $S$ measures sensitivity of CL to plant uncertainty.\\
 \sub{Loop shaping — why} shape $L{=}PC$ to balance performance vs stability.\\
