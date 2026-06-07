@@ -51,8 +51,12 @@
 $A$=dynamics (main), $B$=input, $C$=output, $D$=disturbance. $A\!\in\!\R^{n\times n}$, $B\!\in\!\R^{n\times 1}$, $C\!\in\!\R^{1\times n}$. Feedthrough form: $y{=}C\mathbf{x}{+}Du$.\\[1pt]
 \sub{ODE $\to$ SS} for $\ddot{x}+a\dot x+bx=u$, $\mathbf{x}=(x,\dot x)^T$:
 \[ A=\begin{pmatrix}0&1\\-b&-a\end{pmatrix},\ B=\begin{pmatrix}0\\1\end{pmatrix},\ C=\begin{pmatrix}1&0\end{pmatrix} \]
+3rd order $\dddot x+a\ddot x+b\dot x+cx=u$, $\mathbf{x}=(x,\dot x,\ddot x)^T$:
+\[ A=\begin{pmatrix}0&1&0\\0&0&1\\-c&-b&-a\end{pmatrix},\ B=\begin{pmatrix}0\\0\\1\end{pmatrix},\ C=\begin{pmatrix}1&0&0\end{pmatrix} \]
 \sub{TF $\to$ SS} for $G(s)=\dfrac{b_0}{s^2+a_1 s+a_0}$:
 \[ A=\begin{pmatrix}0&1\\-a_0&-a_1\end{pmatrix},\ B=\begin{pmatrix}0\\1\end{pmatrix},\ C=\begin{pmatrix}b_0&0\end{pmatrix} \]
+3rd order $G(s)=\dfrac{b_0}{s^3+a_2s^2+a_1s+a_0}$:
+\[ A=\begin{pmatrix}0&1&0\\0&0&1\\-a_0&-a_1&-a_2\end{pmatrix},\ B=\begin{pmatrix}0\\0\\1\end{pmatrix},\ C=\begin{pmatrix}b_0&0&0\end{pmatrix} \]
 \sub{Mass-spring-damper} $m\ddot y+c\dot y+ky=u$, $G(s)=\dfrac{1}{ms^2+cs+k}$.
 
 % ---------------------------------------------------
@@ -290,7 +294,7 @@ $p_k$=unstable open-loop poles; push $|S|$ down somewhere $\Rightarrow$ up elsew
 \sub{Series} $G_1G_2$. \sub{Parallel} $G_1\pm G_2$.\\
 \sub{Neg. feedback} $\dfrac{G}{1+GH}$; unity: $\dfrac{G}{1+G}$.\\
 \sub{Pos. feedback} $\dfrac{G}{1-GH}$.\\
-$L(s)=C(s)G(s)$ (loop TF), $T(s)=\tfrac{L(s)}{1+L(s)}$, $G_{er}=\tfrac{1}{1+L(s)}$ (sens. fn).\\
+$L(s)=C(s)P(s)$ (loop TF), $T(s)=\tfrac{L(s)}{1+L(s)}$, $G_{er}=\tfrac{1}{1+L(s)}$ (sens. fn maps disturbance on plant output to final output).\\
 \sub{Cascaded SS} $S_1\!\to\!S_2$ in series: get $G_i{=}C_i(sI{-}A_i)^{-1}B_i{+}D_i$ for each, then $G_{tot}{=}G_2G_1$ (multiply) — easier than building one big $A$.
 
 % ---------------------------------------------------
@@ -311,6 +315,7 @@ $\sqrt{1-\zeta^2}$ at $\zeta{=}0.707$ is $0.707$.
 \sect{21. Math Toolbox}
 \sub{Quadratic} $as^2{+}bs{+}c{=}0\Rightarrow s=\dfrac{-b\pm\sqrt{b^2-4c\,a}}{2a}$.\\
 \sub{$2\times2$ inverse} $\begin{pmatrix}a&b\\c&d\end{pmatrix}^{-1}=\dfrac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$.\\
+\sub{$3\times3$ det} $\det\begin{psmallmatrix}a&b&c\\d&e&f\\g&h&i\end{psmallmatrix}=a(ei{-}fh)-b(di{-}fg)+c(dh{-}eg)$.\\
 \sub{$2\times2$ eigenvalues} $\det(\lambda I-A)=\lambda^2-\mathrm{tr}(A)\lambda+\det(A)$,
 \[ \lambda=\tfrac{\mathrm{tr}\pm\sqrt{\mathrm{tr}^2-4\det}}{2}. \]
 \sub{Resolvent} $(sI-A)^{-1}=\dfrac{\mathrm{adj}(sI-A)}{\det(sI-A)}$.\\
