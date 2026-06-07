@@ -45,7 +45,7 @@
 
 % ===================================================
 \sect{1. Core Concepts \& Modelling}
-\sub{Dynamical system} state $x(t)$ evolves from current state + inputs/disturbances. \textbf{Feedback}: measure output, compare to reference $r$, adjust input $u$.\\[1pt]
+% \sub{Dynamical system} state $x(t)$ evolves from current state + inputs/disturbances. \textbf{Feedback}: measure output, compare to reference $r$, adjust input $u$.\\[1pt]
 \sub{LTI state-space}
 \[ \dot{\mathbf{x}}=A\mathbf{x}+Bu+D,\quad y(t)=C\mathbf{x} \]
 $A$=dynamics (main), $B$=input, $C$=output, $D$=disturbance. $A\!\in\!\R^{n\times n}$, $B\!\in\!\R^{n\times 1}$, $C\!\in\!\R^{1\times n}$. Feedthrough form: $y{=}C\mathbf{x}{+}Du$.\\[1pt]
@@ -118,7 +118,7 @@ $\zeta$ = sine of angle from imag. axis. Underdamped: $0<\zeta<1$.\\
 \[ t_p=\frac{\pi}{\omega_d}\quad(\text{peak time}) \]
 \[ t_s\approx\frac{4}{\sigma}=\frac{4}{\zeta\omega_n}\quad(2\%\ \text{settling}) \]
 \[ t_r\approx\frac{1.8}{\omega_n}\quad(\text{rise }10\text{--}90\%) \]
-$5\%$ overshoot $\Rightarrow \zeta\approx\tfrac{\sqrt2}{2}\approx0.707$.
+% $5\%$ overshoot $\Rightarrow \zeta\approx\tfrac{\sqrt2}{2}\approx0.707$.
 
 % ---------------------------------------------------
 \sect{7. PID Control (Lec 5)}
@@ -229,8 +229,8 @@ cplx poles @ $\omega_n$ & $-180^\circ$ total\\
 \[ G(s)=\frac{K\,s^{\text{pos}}(s{+}z_1)(s{+}z_2)\cdots}{s^{\text{int}}(s{+}p_1)(s{+}p_2)\cdots} \]
 \sub{Sanity} final slope $=-20(\#p{-}\#z)$ dB/dec; final phase $=-90^\circ(\#p{-}\#z)$; DC check: sub $s{=}0$.\\
 \sub{GM \& PM on Bode} $\mathbf{GM}$ = magnitude (dB) at phase $=-180^\circ$; $\mathbf{PM}$ = phase (deg) at magnitude $0$ dB.\\
-\sub{Ex.} flat $+20$dB, corner $\omega{=}2$ ($\to{-}20$), corner $\omega{=}20$ ($\to{-}40$), phase $0\!\to\!{-}90\!\to\!{-}180^\circ$: $K{=}10$, poles $2,20$:
-\[ G=\frac{10}{(\tfrac s2{+}1)(\tfrac{s}{20}{+}1)}=\frac{400}{(s{+}2)(s{+}20)} \]
+% \sub{Ex.} flat $+20$dB, corner $\omega{=}2$ ($\to{-}20$), corner $\omega{=}20$ ($\to{-}40$), phase $0\!\to\!{-}90\!\to\!{-}180^\circ$: $K{=}10$, poles $2,20$:
+% \[ G=\frac{10}{(\tfrac s2{+}1)(\tfrac{s}{20}{+}1)}=\frac{400}{(s{+}2)(s{+}20)} \]
 
 % ---------------------------------------------------
 \sect{14. Nyquist Criterion (Lec 10,12)}
@@ -246,7 +246,7 @@ CL poles satisfy $L(s)=-1$.\\
 Crossover $\omega_{gc}$: $|L(j\omega_{gc})|=1$ (0 dB).\\
 \sub{Gain margin} $g_m=1/|L(j\omega_{pc})|$ at phase $=-180^\circ$. \textit{Find where Nyquist crosses $-$ve real axis; GM = inverse of that magnitude. (+ve).}\\
 \sub{Phase margin} $\varphi_m=180^\circ+\angle L(j\omega_{gc})$. \textit{Find where Nyquist hits unit circle; PM = angle from that point to $-$ve $x$-axis.}\\
-\sub{Stability margin} $s_m$=closest dist of Nyquist to $-1$; $|S(j\omega)|=1/\text{dist to }(-1)$. \textit{Shortest distance from Nyquist curve to $(-1,0)$.}\\
+\sub{Stability margin} $s_m$=closest dist of Nyquist to $-1$; $|S(j\omega)|=1/\text{dist to }(-1)$. \textit{Shortest distance from Nyquist curve to $(-1,0)$.} $|S(j\omega)|=$ sensitivity. \\
 $PM=2\sin^{-1}\!\big(\tfrac{1}{2|S(j\omega_c)|}\big)$.\\
 \sub{Time delay} $e^{-\tau s}$: $|{\cdot}|=1$, adds phase $-\omega\tau$. Max delay $\tau_{max}=\varphi_m/\omega_{gc}$.\\
 \sub{Bode gain-phase} $\angle L(j\omega_{gc})\approx 90^\circ\tfrac{d\log|L|}{d\log\omega}$; $-20$dB/dec$\to-90^\circ$, $-40\to-180^\circ$.
@@ -254,8 +254,9 @@ $PM=2\sin^{-1}\!\big(\tfrac{1}{2|S(j\omega_c)|}\big)$.\\
 % ---------------------------------------------------
 \sect{16. Sensitivity / Gang of Four (Lec 11)}
 \[ S=\frac{1}{1+PC},\qquad T=\frac{PC}{1+PC},\qquad S+T=1 \]
-Output: $\eta=Tr+PS\,d-Tn$; error $r-\eta=Sr-SPd+Tn$.\\
-$\begin{pmatrix}\eta\\e\\u\end{pmatrix}=\begin{pmatrix}T&PS&-T\\S&-PS&-S\\CS&-T&-CS\end{pmatrix}\begin{pmatrix}r\\d\\n\end{pmatrix}$\quad ($r$=ref, $d$=dist, $n$=noise; set other 2$=0$ to solve each TF)\\[1pt]
+% Output: $\eta=Tr+PS\,d-Tn$; error $r-\eta=Sr-SPd+Tn$.\\
+% $\begin{pmatrix}\eta\\e\\u\end{pmatrix}=\begin{pmatrix}T&PS&-T\\S&-PS&-S\\CS&-T&-CS\end{pmatrix}\begin{pmatrix}r\\d\\n\end{pmatrix}$\quad ($r$=ref, $d$=dist, $n$=noise; set other 2$=0$ to solve each TF)\\[1pt]
+\sub{3 TFs} $d$, $r$, $n$. $\to$ Set other 2 to 0 and solve.\\
 Disturbance: $\eta=PS\,d$. $|S|{<}1$ attenuates; $|S|{=}0$ eliminates; $|S|{>}1$ worsens.\\
 $S$ measures sensitivity of CL to plant uncertainty.\\
 \sub{Loop shaping — why} shape $L{=}PC$ to balance performance vs stability.\\
@@ -320,8 +321,8 @@ $\sqrt{1-\zeta^2}$ at $\zeta{=}0.707$ is $0.707$.
 \[ \lambda=\tfrac{\mathrm{tr}\pm\sqrt{\mathrm{tr}^2-4\det}}{2}. \]
 \sub{Resolvent} $(sI-A)^{-1}=\dfrac{\mathrm{adj}(sI-A)}{\det(sI-A)}$.\\
 \sub{Euler} $e^{j\theta}=\cos\theta+j\sin\theta$; $|a+jb|=\sqrt{a^2+b^2}$, $\angle=\arctan\tfrac{b}{a}$.\\
-\sub{Complex divide} $\tfrac{1}{a+jb}=\tfrac{a-jb}{a^2+b^2}$.\\
-\sub{dB} $20\log_{10}2\!\approx\!6$, $20\log_{10}10\!=\!20$, $20\log_{10}\tfrac12\!\approx\!-6$.\\
+% \sub{Complex divide} $\tfrac{1}{a+jb}=\tfrac{a-jb}{a^2+b^2}$.\\
+% \sub{dB} $20\log_{10}2\!\approx\!6$, $20\log_{10}10\!=\!20$, $20\log_{10}\tfrac12\!\approx\!-6$.\\
 \sub{Partial fractions} $\tfrac{1}{(s+p_1)(s+p_2)}=\tfrac{A}{s+p_1}+\tfrac{B}{s+p_2}$, $A=\tfrac{1}{p_2-p_1}$.\\
 \sub{Common integrals} $\int e^{-at}dt=-\tfrac1a e^{-at}$; $\int_0^\infty e^{-at}dt=\tfrac1a$ ($a{>}0$).\\
 \sub{Sin/cos deriv} $\tfrac{d}{dt}\sin\omega t=\omega\cos\omega t$, $\tfrac{d}{dt}\cos\omega t=-\omega\sin\omega t$.\\
