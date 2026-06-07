@@ -196,7 +196,7 @@ real $\Rightarrow$ phase $0^\circ/180^\circ$ (no lag); $X\!\to\!\infty$ as $\ome
 Mag in dB: $20\log_{10}|G(j\omega)|$. $K=10^{dB/20}$, $dB=20\log_{10}K$. $\times10\!\Rightarrow\!20$dB; $1\!\to\!0$dB.\\
 \sub{Standard form} factor so each bracket starts with 1; constant out front $=$ DC gain $K$:
 \[ G(s)=\frac{K(\tfrac sa{+}1)}{s^n(\tfrac sb{+}1)} \]
-Start height (flat, low $\omega$) $=20\log_{10}K$ dB.\\
+Start height (flat, low $\omega$) $=20\log_{10}K$ dB. If sloped (i.e pole @ 0), choose small $\omega$ and S.H. $=20\log_{10}\left(\frac{K}{\omega}\right)$.\\
 \sub{Mag slopes} (added at break freq $\omega{=}|p|,|z|$):
 \begin{tabular}{@{}ll@{}}
 \hline
@@ -220,7 +220,7 @@ zero @ $a$ & $+90^\circ$ total, centred $a$\\
 cplx poles @ $\omega_n$ & $-180^\circ$ total\\
 \hline
 \end{tabular}\\
-\sub{dB factors} $-40{:}0.01$, $-20{:}0.1$, $-6{:}\tfrac12$, $0{:}1$, $6{:}2$, $20{:}10$, $40{:}100$.\\[2pt]
+% \sub{dB factors} $-40{:}0.01$, $-20{:}0.1$, $-6{:}\tfrac12$, $0{:}1$, $6{:}2$, $20{:}10$, $40{:}100$.\\[2pt]
 \sub{Bode $\to$ TF} \textbf{(1)} DC gain $K{=}10^{X\text{dB}/20}$ from flat low-$\omega$ ($\omega=1$ if slanted start). \textbf{(2)} initial slope: flat$=$no int., $-20$/dec$=$one $1/s$, $-40{=}1/s^2$, $+20{=}s$. \textbf{(3)} corners where slope \emph{changes}: extra $-20\Rightarrow$ pole, $+20\Rightarrow$ zero, $\mp40\Rightarrow$ cplx pair @ $\omega_n$. \textbf{(4)} phase confirms: start $0/{-}90/{-}180^\circ{=}0/1/2$ integrators; drop @ corner$=$pole, rise$=$zero. \textbf{(5)} assemble:
 \[ G(s)=\frac{K\,s^{\text{pos}}(s{+}z_1)(s{+}z_2)\cdots}{s^{\text{int}}(s{+}p_1)(s{+}p_2)\cdots} \]
 \sub{Sanity} final slope $=-20(\#p{-}\#z)$ dB/dec; final phase $=-90^\circ(\#p{-}\#z)$; DC check: sub $s{=}0$.\\
@@ -290,7 +290,7 @@ $p_k$=unstable open-loop poles; push $|S|$ down somewhere $\Rightarrow$ up elsew
 \sub{Series} $G_1G_2$. \sub{Parallel} $G_1\pm G_2$.\\
 \sub{Neg. feedback} $\dfrac{G}{1+GH}$; unity: $\dfrac{G}{1+G}$.\\
 \sub{Pos. feedback} $\dfrac{G}{1-GH}$.\\
-$L=PC$ (loop), $G_{yr}=\tfrac{L}{1+L}$, $G_{er}=\tfrac{1}{1+L}$.\\
+$L(s)=C(s)G(s)$ (loop TF), $T(s)=\tfrac{L(s)}{1+L(s)}$, $G_{er}=\tfrac{1}{1+L(s)}$ (sens. fn).\\
 \sub{Cascaded SS} $S_1\!\to\!S_2$ in series: get $G_i{=}C_i(sI{-}A_i)^{-1}B_i{+}D_i$ for each, then $G_{tot}{=}G_2G_1$ (multiply) — easier than building one big $A$.
 
 % ---------------------------------------------------
