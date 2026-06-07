@@ -271,7 +271,7 @@ $S$ measures sensitivity of CL to plant uncertainty.\\
 \sub{Loop shaping — why} shape $L{=}PC$ to balance performance vs stability.\\
 \sub{how} (i) high gain / integrator at low $\omega$ $\to$ tracking + reject $d$ ($S{\approx}0$); (ii) low gain + steep roll-off at high $\omega$ $\to$ reject noise $n$ ($T{\approx}0$); (iii) gentle slope ($\approx{-}20$dB/dec) near $\omega_{gc}$ $\to$ keep phase margin.\\
 Or pick desired $L$ (e.g. $\tfrac{\alpha}{s}$, $\alpha$ sets $\omega_{gc}$) then $C{=}L/P$ — avoid cancelling unstable poles/zeros.\\
-\sub{Robustness} relative model error $\delta m(s){=}\dfrac{\delta G(s)}{G(s)}$; robust stability $\Leftarrow|T(j\omega)|<\dfrac{1}{|\delta m(j\omega)|}$ — keep $T$ small where $\delta m$ large (high $\omega$).
+\sub{Robustness} relative model error $\Delta m(s){=}\dfrac{\Delta G(s)}{G(s)}$; robust stability $\Leftarrow|T(j\omega)|<\dfrac{1}{|\Delta m(j\omega)|}$ — keep $T$ small where $\Delta m$ large (high $\omega$).
 
 % ---------------------------------------------------
 \sect{17. Fundamental Limitations (Lec 11,12)}
