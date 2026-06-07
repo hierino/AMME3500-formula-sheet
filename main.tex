@@ -163,8 +163,8 @@ $e^{At}=Te^{Jt}T^{-1}$ (Jordan); repeated eig give $t^k$ terms.
 
 % ---------------------------------------------------
 \sect{10. Reachability / Control (Lec 7)}
-\sub{Reachability matrix} (2nd order: $2\times2$)
-\[ W=\begin{bmatrix}B&AB\end{bmatrix} \]
+\sub{Reachability matrix} (3rd order: $3\times3$)
+\[ W=\begin{bmatrix}B&AB&A^2B\end{bmatrix} \]
 Reachable $\Leftrightarrow \det W\neq0$.\\
 Equivalent: can place \emph{any} closed-loop poles via $K$.\\
 \sub{State feedback} $u=-K\mathbf x$, closed loop $\dot{\mathbf x}=(A-BK)\mathbf x$.\\
@@ -177,8 +177,8 @@ char.\ poly $s^2{+}a_1s{+}a_2$ read off top row.\\
 
 % ---------------------------------------------------
 \sect{11. Observability / Observers (Lec 8)}
-\sub{Observability matrix} (2nd order: $2\times2$)
-\[ W_o=\begin{bmatrix}C\\CA\end{bmatrix} \]
+\sub{Observability matrix} (3rd order: $3\times3$)
+\[ W_o=\begin{bmatrix}C\\CA\\CA^2\end{bmatrix} \]
 Observable $\Leftrightarrow \det W_o\neq0$: recover $\mathbf x(0)$ from $u,y$ on $[0,T]$.\\
 \sub{Luenberger observer}
 \[ \dot{\hat{\mathbf x}}=A\hat{\mathbf x}+Bu+L(y-C\hat{\mathbf x}) \]
@@ -306,10 +306,12 @@ $p_k$=unstable open-loop poles; push $|S|$ down somewhere $\Rightarrow$ up elsew
 \sub{Neg. feedback} $\dfrac{G}{1+GH}$; unity: $\dfrac{G}{1+G}$.\\
 \sub{Pos. feedback} $\dfrac{G}{1-GH}$.\\
 $L(s)=C(s)P(s)$ (loop TF), $T(s)=\tfrac{L(s)}{1+L(s)}$, $S(s)=\tfrac{1}{1+L(s)}$ (sensitivity function maps disturbance on plant output to final output).\\
-\sub{Cascaded SS — recipe} Sub $u_2{=}y_1{=}C_1x_1$ into $\dot x_2$; stack $x{=}[x_1;x_2]$:
+\sub{Cascaded SS — recipe} EOM of each subsystem:
+\[ \dot x_1{=}A_1x_1{+}B_1u_1,\ y_1{=}C_1x_1;\quad \dot x_2{=}A_2x_2{+}B_2u_2,\ y_2{=}C_2x_2 \]
+Sub interconnection $u_2{=}y_1{=}C_1x_1$ into $\dot x_2$; stack $x{=}[x_1;x_2]$:
 \[ \dot x=\begin{bmatrix}A_1&0\\B_2C_1&A_2\end{bmatrix}x+\begin{bmatrix}B_1\\0\end{bmatrix}u_1,\quad y_2=\begin{bmatrix}0&C_2\end{bmatrix}x \]
 ($A$ block lower-triangular $\Rightarrow$ eig$(A)=$ eig$(A_1)\cup$ eig$(A_2)$ — quick pole check).\\
-\sub{Reachability/observability of $S$} test full $W{=}[B\ AB\ \cdots]$, $W_o{=}[C;CA;\cdots]$ on the \emph{combined} system — \textbf{not} automatic even if $S_1,S_2$ individually are (pole-zero cancellation between $G_1,G_2$ can hide a mode).\\
+% \sub{Reachability/observability of $S$} test full $W{=}[B\ AB\ \cdots]$, $W_o{=}[C;CA;\cdots]$ on the \emph{combined} system — \textbf{not} automatic even if $S_1,S_2$ individually are (pole-zero cancellation between $G_1,G_2$ can hide a mode).\\
 \sub{TF} get $G_i{=}C_i(sI{-}A_i)^{-1}B_i{+}D_i$ for each subsystem, then $G_{tot}{=}G_2G_1$ (multiply) — far easier than inverting the big $(sI{-}A)$.
 
 % ---------------------------------------------------
