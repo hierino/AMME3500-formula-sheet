@@ -187,7 +187,8 @@ Error $\tilde{\mathbf x}=\mathbf x-\hat{\mathbf x}$: $\dot{\tilde{\mathbf x}}=(A
 \textbf{Condition}: $A-LC$ stable ($\Rightarrow\tilde{\mathbf x}\!\to\!0$). Roots (eig) of $A{-}LC$: \textbf{negative} $\Rightarrow$ error decays, $\hat{\mathbf x}\!\to\!\mathbf x$ (convergent); \textbf{positive} $\Rightarrow$ unstable, error grows, never converges.\\
 Design: $\det(sI-(A-LC))\overset{!}{=}$ desired poly, match coeffs.\\
 \sub{Output feedback} (separation): observer + $u=-K\hat{\mathbf x}+Nr$. CL char poly: $\det(sI{-}(A{-}BK))\det(sI{-}(A{-}LC))$.\\
-\sub{Separation principle} applies to systems that are \emph{both reachable \& observable}: design $K$ and $L$ \textbf{independently}; the CL poles are just the union of the controller poles (eig $A{-}BK$) and observer poles (eig $A{-}LC$).\\
+\sub{Separation principle} systems \emph{both reachable \& observable}: design cont $K$ and obsv $L$ \textbf{independently}; the CL poles are just the union of the controller poles (eig $A{-}BK$) and observer poles (eig $A{-}LC$).\\
+%  applies when system is both reachable \& observable: design controller $K$ and observer $L$ independently; CL poles = union of $(A-BK)$ poles and $(A-LC)$ poles.
 \sub{Feedforward} (zero SS err): $N=-\big(C(A-BK)^{-1}B\big)^{-1}$.\\
 \sub{Integral action} augment state $\dot q=C\mathbf x-\bar y$ to kill SS error without exact model.
 
@@ -332,20 +333,21 @@ $\sqrt{1-\zeta^2}$ at $\zeta{=}0.707$ is $0.707$.
 
 % ---------------------------------------------------
 \sect{21. Written Question Framework}
-\sub{Stability} System stable $\Leftrightarrow$ all poles/eigenvalues have negative real part $\Leftrightarrow$ free response $x(t)\!\to\!0$ for any $x(0)$, zero input.\\
-\sub{Observability} System observable $\Leftrightarrow \det[C;CA;CA^2]\neq0$ $\Leftrightarrow$ can uniquely recover $\mathbf x(0)$ from measured $u,y$ over $[0,T]$.\\
-\sub{Observer purpose} estimate unmeasured state $\mathbf x$ from available $u,y$ → enables state-feedback when full state unavailable. Works iff $A-LC$ stable (error $\tilde{\mathbf x}\to0$).\\
-\sub{Observer gain L condition} eigenvalues (roots) of $A-LC$ must be negative real (or stable complex, real part $<0$) so observer error decays to zero.\\
+% \sub{Stability} System stable $\Leftrightarrow$ all poles/eigenvalues have negative real part $\Leftrightarrow$ free response $x(t)\!\to\!0$ for any $x(0)$, zero input.\\
+\sub{Observability} Can uniquely recover $\mathbf x(0)$ from measured $u,y$ over $[0,T]$. Find unmeausrable from what you can measure.\\
+\sub{Observer purpose} estimate unmeasured state $\mathbf x$ from available $u,y$ → enables state-feedback when full state unavailable.\\
+% Works iff $A-LC$ stable (error $\tilde{\mathbf x}\to0$).\\
+% \sub{Observer gain L condition} eigenvalues (roots) of $A-LC$ must be negative real (or stable complex, real part $<0$) so observer error decays to zero.\\
 \sub{Sensitivity function $S$} measures system sensitivity to plant uncertainty; $|S|\ll1$ means disturbances attenuated (good tracking, disturbance rejection). $S{+}T=1$ (seesaw): cannot make both small.\\
 \sub{$S$ \& $T$ trade-off} $S$ low at low $\omega$ (track, reject slow disturbances); $T$ low at high $\omega$ (reject fast noise). Near crossover $\omega_{gc}$, phase margin enforces balance.\\
-\sub{Separation principle} applies when system is both reachable \& observable: design controller $K$ and observer $L$ independently; CL poles = union of $(A-BK)$ poles and $(A-LC)$ poles.\\
-\sub{PID vs state-feedback} \textbf{PID}: model-free, robust, SISO only, heuristic tuning, limited pole placement. \textbf{State-FB}: requires model + full state, MIMO capable, arbitrary pole placement, sensitive to model errors.\\
-\sub{Nyquist stability} plot $L(j\omega)$ for $\omega:-\infty\to\infty$. Closed loop stable iff Nyquist does \emph{not} encircle $-1$ (count: \# clockwise = $Z-P$, need $Z=0$).\\
+% \sub{Separation principle} applies when system is both reachable \& observable: design controller $K$ and observer $L$ independently; CL poles = union of $(A-BK)$ poles and $(A-LC)$ poles.\\
+% \sub{PID vs state-feedback} \textbf{PID}: model-free, robust, SISO only, heuristic tuning, limited pole placement. \textbf{State-FB}: requires model + full state, MIMO capable, arbitrary pole placement, sensitive to model errors.\\
+% \sub{Nyquist stability} plot $L(j\omega)$ for $\omega:-\infty\to\infty$. Closed loop stable iff Nyquist does \emph{not} encircle $-1$ (count: \# clockwise = $Z-P$, need $Z=0$).\\
 \sub{Gain margin} $GM=1/|L(j\omega_{pc})|$ where phase $=-180^\circ$. On Nyquist, find where curve crosses negative real axis; GM = reciprocal of magnitude. On Bode, read magnitude (dB) at phase $-180^\circ$.\\
 \sub{Real-world control design} (1) model system (ODE/SS from physics); (2) ID parameters (expts, data); (3) check reachable/observable; (4) design $K$ for transient specs ($\zeta,\omega_n$); (5) design $L$ for measurement noise tolerance; (6) check closed-loop stability (Nyquist/poles); (7) simulate with real noise/uncertainty.\\
-\sub{Real-world uncertainties} parameter errors (measured $\neq$ true), disturbances (wind, friction, etc.), sensor noise, unmodelled dynamics (neglected high-freq poles/delays), nonlinearity (saturation, friction).\\
+% \sub{Real-world uncertainties} parameter errors (measured $\neq$ true), disturbances (wind, friction, etc.), sensor noise, unmodelled dynamics (neglected high-freq poles/delays), nonlinearity (saturation, friction).\\
 \sub{Step response features from TF} $G(s)$ poles $\Rightarrow$ poles in TF $\Rightarrow$ envelope decay $e^{-\sigma t}$ and oscillation frequency $\omega_d$. Final value $x(\infty)=G(0)\cdot U$. DC gain sign $\Rightarrow$ direction (dip/rise).\\
-\sub{Bode plot interpretation} (1) flat low-$\omega$ $\Rightarrow$ DC gain, slope $-20$/dec per integrator. (2) Corners = pole ($-20$), zero ($+20$), or complex pair ($\mp40$). (3) Phase: flat $\to -90^\circ$ at each pole. (4) Count integrators from initial slope \& final phase. (5) Magnitude @ $0$dB gives crossover; phase there $\Rightarrow$ phase margin.
+% \sub{Bode plot interpretation} (1) flat low-$\omega$ $\Rightarrow$ DC gain, slope $-20$/dec per integrator. (2) Corners = pole ($-20$), zero ($+20$), or complex pair ($\mp40$). (3) Phase: flat $\to -90^\circ$ at each pole. (4) Count integrators from initial slope \& final phase. (5) Magnitude @ $0$dB gives crossover; phase there $\Rightarrow$ phase margin.
 
 % ---------------------------------------------------
 \sect{22. Math Toolbox}
