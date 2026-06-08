@@ -199,8 +199,8 @@ $\angle G=\sum\angle(\text{num})-\sum\angle(\text{den})$: \textbf{numerator} (ze
 Ex.\ $G=\frac{1}{j\omega(j\omega+1)(j\omega+3)}$:
 \[ |G|=\frac{1}{\sqrt{\omega^2(\omega^2{+}1)(\omega^2{+}9)}} \]
 \[ \angle G=-\big(\tfrac{\pi}{2}+\arctan\omega+\arctan\tfrac{\omega}{3}\big) \]
-\sub{Forced sinusoid (undetermined coeffs)} for $\ddot x+\omega_n^2x=\sin\omega t$, try $x{=}X\sin\omega t$, match:
-\[ X=\frac{1}{\omega_n^2-\omega^2} \]
+\sub{Forced sinusoid (undetermined coeffs)} for $\ddot x+\omega_n^2x=F\sin\omega t$, try $x{=}X\sin\omega t$, match:
+\[ X=\frac{F}{\omega_n^2-\omega^2} \]
 real $\Rightarrow$ phase $0^\circ/180^\circ$ (no lag); $X\!\to\!\infty$ as $\omega\!\to\!\omega_n$ (\textbf{resonance}, undamped).
 
 % ---------------------------------------------------
@@ -208,7 +208,8 @@ real $\Rightarrow$ phase $0^\circ/180^\circ$ (no lag); $X\!\to\!\infty$ as $\ome
 Mag in dB: $20\log_{10}|G(j\omega)|$. $K=10^{dB/20}$, $dB=20\log_{10}K$. $\times10\!\Rightarrow\!20$dB; $1\!\to\!0$dB.
 \sub{Standard form} factor so each bracket starts with 1; constant out front $=$ DC gain $K$:
 \[ G(s)=\frac{K(\tfrac sa{+}1)}{s^n(\tfrac sb{+}1)} \]
-Start height (flat, low $\omega$) $=20\log_{10}K$ dB. If sloped (i.e pole @ 0), choose small $\omega$ and S.H. $=20\log_{10}\left(\frac{K}{\omega}\right)\Rightarrow K=\omega\cdot 10^{\mathrm{S.H}/20}$.\\
+% Start height (flat, low $\omega$) $=20\log_{10}K$ dB. If sloped (i.e pole @ 0), choose small $\omega$ and S.H. $=20\log_{10}\left(\frac{K}{\omega}\right)\Rightarrow K=\omega\cdot 10^{\mathrm{S.H}/20}$.\\
+\sub{Start height} $H(j\omega)_{\mathrm{dB}}=20\log_{10}(K\omega)=20\log_{10}(K)+20\log_{10}(\omega)$\\
 \sub{Mag slopes} (added at break freq $\omega{=}|p|,|z|$):\\
 \begin{tabular}{@{}ll@{}}
 \hline
