@@ -1,5 +1,5 @@
 \documentclass[9pt]{extarticle}
-\usepackage[a4paper,landscape,margin=6mm]{geometry}
+\usepackage[a4paper,landscape, left=5mm, right=5mm, top = 5mm, bottom = 6mm]{geometry} %Original margin = 6mm
 \usepackage{multicol}
 \usepackage{amsmath,amssymb}
 \usepackage{mathtools}
@@ -75,7 +75,7 @@ Multivariable: $A=\tfrac{\partial f}{\partial \mathbf x}\big|_e$ (Jacobian), $B=
 \sect{3. First-Order Systems (Lec 3)}
 $\dot x+ax=u$, free resp.: $x(t)=e^{-at}x(0)$.\\
 \textbf{Stability}: pole at $s{=}-a$. $a{>}0\Rightarrow$ decays, \textbf{stable}; $a{<}0\Rightarrow$ grows, \textbf{unstable}.\\
-Step ($u{=}$const), $x(0){=}x_0$:
+Step ($u{=}$const), $x(0){=}x_0$:$\qquad$ (don't forget step $u\cdot\mathbf{1}(t)$)
 \[ x(t)=\Big(x_0-\tfrac{u}{a}\Big)e^{-at}+\tfrac{u}{a} \]
 Steady state: $x(\infty)=u/a$. Time constant $\tau=1/a$.\\
 \sub{Time specs} rise $t_r\approx\tfrac{2.2}{a}{=}2.2\tau$ ($10$--$90\%$); settle $t_s\approx\tfrac{3.91}{a}\approx\tfrac{4}{a}{=}4\tau$ ($2\%$).\\
@@ -87,7 +87,7 @@ $G(0)$ sign = direction ($G(0){<}0\Rightarrow$ output dips below $0$); magnitude
 
 % ---------------------------------------------------
 \sect{4. Proportional / Steady-State Error}
-Plant $\dot x+ax=u$, $u=K_P(r-x)$:
+Plant $\dot x+ax=u$, $u=K_P(r-x)\quad$  (state-feedback controller):
 \[ \dot x+(a{+}K_P)x=K_Pr \]
 $x(\infty)=\tfrac{K_Pr}{K_P+a}$, error $e(\infty)=r\,\tfrac{a}{K_P+a}$.\\
 With disturbance $d$, noise $n$:
@@ -167,7 +167,7 @@ $e^{At}=Te^{Jt}T^{-1}$ (Jordan); repeated eig give $t^k$ terms.
 \sub{Reachability matrix} (3rd order: $3\times3$)
 \[ W=\begin{bmatrix}B&AB&A^2B\end{bmatrix} \]
 Reachable $\Leftrightarrow \det W\neq0$.\\
-Equivalent: can place \emph{any} closed-loop poles via $K$.\\
+Equivalent: can place \emph{any} closed-loop poles via $K$, for $K=\begin{pmatrix}k_1&k_2\end{pmatrix}$.\\
 \sub{State feedback} $u=-K\mathbf x$, closed loop $\dot{\mathbf x}=(A-BK)\mathbf x$.\\
 Design: $\det(sI-(A-BK))\overset{!}{=}$ desired char. poly, \textbf{match coefficients}.\\
 \sub{Transformation} $T=W\tilde W^{-1}$ ($\tilde W$ from reachable canonical form), $K=\tilde K T$.\\
@@ -308,7 +308,7 @@ $p_k$=unstable open-loop poles; push $|S|$ down somewhere $\Rightarrow$ up elsew
 \sub{Series} $G_1G_2$. \sub{Parallel} $G_1\pm G_2$.\\
 \sub{Neg. feedback} $\dfrac{G}{1+GH}$; unity: $\dfrac{G}{1+G}$.\\
 \sub{Pos. feedback} $\dfrac{G}{1-GH}$.\\
-$L(s)=C(s)P(s)$ (loop TF), $T(s)=\tfrac{L(s)}{1+L(s)}$, $S(s)=\tfrac{1}{1+L(s)}$ (sensitivity function maps disturbance on plant output to final output).\\
+$L(s)=C(s)P(s)$ (loop TF), $T(s)=\tfrac{L(s)}{1+L(s)}$, $S(s)=\tfrac{1}{1+L(s)}$ (sensitivity function measures rel change of CL TF wrt to small change of the plant).\\
 \sub{Cascaded SS — recipe} EOM of each subsystem:
 \[ \dot x_1{=}A_1x_1{+}B_1u_1,\ y_1{=}C_1x_1;\quad \dot x_2{=}A_2x_2{+}B_2u_2,\ y_2{=}C_2x_2 \]
 Sub interconnection $u_2{=}y_1{=}C_1x_1$ into $\dot x_2$; stack $x{=}[x_1;x_2]$:
@@ -325,7 +325,7 @@ Sub interconnection $u_2{=}y_1{=}C_1x_1$ into $\dot x_2$; stack $x{=}[x_1;x_2]$:
 \item PD design: pick $\zeta$ from $M_p$, $\omega_n$ from $t_s$, match denom.
 \item Nyquist through $(\alpha,0)$: set $G(s)=\alpha$; root is purely imaginary $s{=}\pm j\omega$.
 \item Zero SS error tracking: use \textbf{integral} action (robust) or feedforward $N$ (needs exact model).
-\item Real-world uncertainty: parameter errors, disturbances, sensor noise, unmodelled nonlinearity.
+\item Real-world uncertainty: parameter errors, disturbances, sensor noise, noise affecting dynamics, unmodelled nonlinearity.
 \end{itemize}
 \sub{PID vs state-feedback} \textbf{PID}: model-free, mainly SISO, heuristic/robust, simple to tune, limited pole control. \textbf{State-FB}: needs accurate model + full state (or observer), handles MIMO, gives exact pole placement.\\
 \sub{Useful} $\zeta{=}0.5\!\Rightarrow\!M_p{\approx}16\%$; $\zeta{=}0.707\!\Rightarrow\!M_p{\approx}4.3\%$; $\zeta{=}0.6\!\Rightarrow\!M_p{\approx}9.5\%$.\\
@@ -334,8 +334,8 @@ $\sqrt{1-\zeta^2}$ at $\zeta{=}0.707$ is $0.707$.
 % ---------------------------------------------------
 \sect{21. Written Question Framework}
 % \sub{Stability} System stable $\Leftrightarrow$ all poles/eigenvalues have negative real part $\Leftrightarrow$ free response $x(t)\!\to\!0$ for any $x(0)$, zero input.\\
-\sub{Observability} Can uniquely recover $\mathbf x(0)$ from measured $u,y$ over $[0,T]$. Find unmeausrable from what you can measure.\\
-\sub{Observer purpose} estimate unmeasured state $\mathbf x$ from available $u,y$ → enables state-feedback when full state unavailable.\\
+\sub{Observability} Can uniquely recover initial value $\mathbf x(0)$ from measured $u,y$ over $[0,T]$. Find unmeausrable from what you can measure.\\
+\sub{Observer purpose} estimate unmeasured state $\mathbf x$ from available $u,y$ → enables state-feedback when full state unavailable. Asymptotically tracks state of the plant.\\
 % Works iff $A-LC$ stable (error $\tilde{\mathbf x}\to0$).\\
 % \sub{Observer gain L condition} eigenvalues (roots) of $A-LC$ must be negative real (or stable complex, real part $<0$) so observer error decays to zero.\\
 \sub{Sensitivity function $S$} measures system sensitivity to plant uncertainty; $|S|\ll1$ means disturbances attenuated (good tracking, disturbance rejection). $S{+}T=1$ (seesaw): cannot make both small.\\
