@@ -1,5 +1,5 @@
 \documentclass[9pt]{extarticle}
-\usepackage[a4paper,landscape, left=5mm, right=5mm, top = 5mm, bottom = 6mm]{geometry} %Original margin = 6mm
+\usepackage[a4paper,landscape, margin = 6mm]{geometry} %Original margin = 6mm;  left=5mm, right=5mm, top = 5mm, bottom = 6mm
 \usepackage{multicol}
 \usepackage{amsmath,amssymb}
 \usepackage{mathtools}
@@ -95,16 +95,16 @@ With disturbance $d$, noise $n$:
 Large $K_P\Rightarrow$ small error (\textbf{feedback stabilisation}: pick $K_P>-a$). \textbf{Integral} action $\Rightarrow$ zero steady-state error.\\
 \sub{SS error (unity fb, unit step)} $e(\infty)=\dfrac{1}{1+G(0)}$ ($G(0)$=DC loop gain; position const $K_p{=}G(0)$).\\
 \sub{System type} \# poles of $L{=}CG$ at $s{=}0$: $0,1,2\Rightarrow$ Type $0,1,2$.\par\noindent
-{\footnotesize\renewcommand{\arraystretch}{0.7}
-\begin{tabular}{@{}lccc@{}}
-\hline
-& Type 0 & Type 1 & Type 2\\
-\hline
-Step & $\frac{1}{1+K_p}$ & $0$ & $0$\\
-Ramp & $\infty$ & $\frac{1}{K_v}$ & $0$\\
-Parab. & $\infty$ & $\infty$ & $\frac{1}{K_a}$\\
-\hline
-\end{tabular}\\[-2pt]}
+% {\footnotesize\renewcommand{\arraystretch}{0.7}
+% \begin{tabular}{@{}lccc@{}}
+% \hline
+% & Type 0 & Type 1 & Type 2\\
+% \hline
+% Step & $\frac{1}{1+K_p}$ & $0$ & $0$\\
+% Ramp & $\infty$ & $\frac{1}{K_v}$ & $0$\\
+% Parab. & $\infty$ & $\infty$ & $\frac{1}{K_a}$\\
+% \hline
+% \end{tabular}\\[-2pt]}
 
 % ===================================================
 \sect{5. Homogeneous Solns \& Poles (Lec 4)}
@@ -271,8 +271,8 @@ $S{+}T{=}1$: a seesaw — low $S$ (tracking/dist.\ rejection) vs.\ low $T$ (robu
 \sub{3 TFs} $d$, $r$, $n$. $\to$ Set other 2 to 0 and solve.\\
 Disturbance: $\eta=PS\,d$. $|S|{<}1$ attenuates; $|S|{=}0$ eliminates; $|S|{>}1$ worsens.\\
 $S$ measures sensitivity of CL to plant uncertainty.\\
-\sub{Loop shaping — why} shape $L{=}PC$ to balance performance vs stability.\\
-\sub{how} (i) high gain / integrator at low $\omega$ $\to$ tracking + reject $d$ ($S{\approx}0$); (ii) low gain + steep roll-off at high $\omega$ $\to$ reject noise $n$ ($T{\approx}0$); (iii) gentle slope ($\approx{-}20$dB/dec) near $\omega_{gc}$ $\to$ keep phase margin.\\
+\sub{Loop shaping — why} shape $L{=}PC$ to balance performance vs stability across frequency. Can't have both $S$ and $T$ low everywhere, shapre $L$ to benefit where it matters. \\
+\sub{how} Tune $C$ (adding gain, poles or zeros) s.t. (i) high gain / integrator at low $\omega$ $\to$ tracking + reject $d$ ($S{\approx}0$); (ii) low gain + steep roll-off at high $\omega$ $\to$ reject noise $n$ ($T{\approx}0$); (iii) gentle slope ($\approx{-}20$dB/dec) near $\omega_{gc}$ $\to$ keep phase margin.\\
 Or pick desired $L$ (e.g. $\tfrac{\alpha}{s}$, $\alpha$ sets $\omega_{gc}$) then $C{=}L/P$ — avoid cancelling unstable poles/zeros.\\
 \sub{Robustness} relative model error $\Delta m(s){=}\dfrac{\Delta G(s)}{G(s)}$; robust stability $\Leftarrow|T(j\omega)|<\dfrac{1}{|\Delta m(j\omega)|}$ — keep $T$ small where $\Delta m$ large (high $\omega$).
 
@@ -327,7 +327,7 @@ Sub interconnection $u_2{=}y_1{=}C_1x_1$ into $\dot x_2$; stack $x{=}[x_1;x_2]$:
 \item Zero SS error tracking: use \textbf{integral} action (robust) or feedforward $N$ (needs exact model).
 \item Real-world uncertainty: parameter errors, disturbances, sensor noise, noise affecting dynamics, unmodelled nonlinearity.
 \end{itemize}
-\sub{PID vs state-feedback} \textbf{PID}: model-free, mainly SISO, heuristic/robust, simple to tune, limited pole control. \textbf{State-FB}: needs accurate model + full state (or observer), handles MIMO, gives exact pole placement.\\
+\sub{PID vs state-feedback} \textbf{PID}: model-free (acts on error), mainly SISO, heuristic/robust, simple to tune, limited pole control. \textbf{State-FB}: needs accurate model + full state (or observer), handles MIMO, gives exact pole placement.\\
 \sub{Useful} $\zeta{=}0.5\!\Rightarrow\!M_p{\approx}16\%$; $\zeta{=}0.707\!\Rightarrow\!M_p{\approx}4.3\%$; $\zeta{=}0.6\!\Rightarrow\!M_p{\approx}9.5\%$.\\
 $\sqrt{1-\zeta^2}$ at $\zeta{=}0.707$ is $0.707$.
 
